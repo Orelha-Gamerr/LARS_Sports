@@ -9,8 +9,6 @@ lars-sports/
 ├── app/
 │   ├── Http/
 │   │   ├── Controllers/
-│   │   │   ├── Auth/
-│   │   │   │   └── LoginController.php
 │   │   │   ├── Admin/
 │   │   │   │   ├── QuadraController.php
 │   │   │   │   ├── ReservaController.php
@@ -82,11 +80,6 @@ lars-sports/
 * `/admin/reservas` → Listar reservas
 * `/admin/relatorios` → Gerar relatórios mensais
 
-## Próximos Passos
+## License
 
-1. Criar **seeders** para popular quadras, clientes e reservas de teste.
-2. Implementar **views Blade** seguindo os protótipos do Figma.
-3. Adicionar **autenticação** (Laravel Breeze ou Jetstream).
-4. Criar **policies** para controle de acesso entre clientes e administradores.
-5. Implementar lógica de **verificação de disponibilidade** de quadras.
-6. Criar **relatórios mensais** com queries agregadas de reservas e pagamentos.
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
