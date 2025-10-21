@@ -29,6 +29,60 @@ You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you
 
 If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
+## Project Structure
+
+lars-sports/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Auth/               # Login e registro
+│   │   │   │   └── LoginController.php
+│   │   │   ├── Admin/              # Controladores para admin
+│   │   │   │   ├── QuadraController.php
+│   │   │   │   ├── ReservaController.php
+│   │   │   │   └── RelatorioController.php
+│   │   │   ├── ClienteController.php
+│   │   │   └── HomeController.php
+│   ├── Models/
+│   │   ├── Cliente.php
+│   │   ├── Quadra.php
+│   │   ├── Reserva.php
+│   │   └── Pagamento.php
+│   └── Policies/
+│       └── QuadraPolicy.php
+├── database/
+│   ├── migrations/
+│   │   ├── 2025_05_28_000001_create_clientes_table.php
+│   │   ├── 2025_05_28_000002_create_quadras_table.php
+│   │   ├── 2025_05_28_000003_create_reservas_table.php
+│   │   └── 2025_05_28_000004_create_pagamentos_table.php
+│   └── seeders/
+│       ├── ClienteSeeder.php
+│       ├── QuadraSeeder.php
+│       └── ReservaSeeder.php
+├── resources/
+│   ├── views/
+│   │   ├── auth/
+│   │   │   ├── login.blade.php
+│   │   │   └── register.blade.php
+│   │   ├── admin/
+│   │   │   ├── quadras/
+│   │   │   │   ├── index.blade.php
+│   │   │   │   ├── create.blade.php
+│   │   │   │   └── edit.blade.php
+│   │   │   ├── reservas/
+│   │   │   │   ├── index.blade.php
+│   │   │   │   └── relatorios.blade.php
+│   │   │   └── dashboard.blade.php
+│   │   ├── cliente/
+│   │   │   ├── reservas.blade.php
+│   │   │   └── perfil.blade.php
+│   │   └── layouts/
+│   │       └── app.blade.php
+├── routes/
+│   └── web.php
+└── tests/
+
 ## Laravel Sponsors
 
 We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
