@@ -5,18 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Model
+class Cliente extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'nivel_acesso'
+        'telefone',
+        'cpf',
+        'data_nascimento',
+        'endereco'
+    ];
+
+    protected $casts = [
+        'data_nascimento' => 'date',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function reservas()
+    {
+        return $this->hasMany(Reserva::class);
     }
 
     // Acessor para nome através do user

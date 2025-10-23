@@ -6,21 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('cancelamentos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('reserva_id')->constrained()->onDelete('cascade');
+            $table->text('motivo');
+            $table->enum('tipo', ['cliente', 'admin', 'sistema']);
+            $table->timestamp('data_cancelamento');
+            $table->decimal('valor_estornado', 8, 2)->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('cancelamentos');
     }

@@ -6,21 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('quadras', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->enum('tipo', ['society', 'futsal', 'volei', 'basquete', 'tenis']);
+            $table->text('descricao')->nullable();
+            $table->decimal('preco_hora', 8, 2);
+            $table->integer('capacidade')->default(10);
+            $table->boolean('disponivel')->default(true);
+            $table->string('imagem')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('quadras');
     }

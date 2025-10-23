@@ -2,16 +2,31 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Cliente;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class ClienteSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        // Criar cliente específico
+        $userCliente = User::create([
+            'name' => 'João Cliente',
+            'email' => 'cliente@email.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        Cliente::create([
+            'user_id' => $userCliente->id,
+            'telefone' => '(11) 99999-9999',
+            'cpf' => '123.456.789-00',
+            'data_nascimento' => '1990-01-01',
+            'endereco' => 'Rua Exemplo, 123',
+        ]);
+
+        // Criar mais clientes com factory
+        Cliente::factory(10)->create();
     }
 }

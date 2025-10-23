@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Quadras;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
-class QuadrasController extends Controller
+class ClienteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class QuadrasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Quadras $quadras)
+    public function show(Cliente $Cliente)
     {
         //
     }
@@ -42,7 +42,7 @@ class QuadrasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Quadras $quadras)
+    public function edit(Cliente $Cliente)
     {
         //
     }
@@ -50,7 +50,7 @@ class QuadrasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Quadras $quadras)
+    public function update(Request $request, Cliente $Cliente)
     {
         //
     }
@@ -58,7 +58,7 @@ class QuadrasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Quadras $quadras)
+    public function destroy(Cliente $Cliente)
     {
         //
     }

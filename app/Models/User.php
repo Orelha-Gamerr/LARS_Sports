@@ -45,4 +45,34 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+     public function cliente()
+    {
+        return $this->hasOne(Cliente::class);
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->admin !== null;
+    }
+
+    public function isCliente()
+    {
+        return $this->cliente !== null;
+    }
+
+    public function scopeClientes($query)
+    {
+        return $query->whereHas('cliente');
+    }
+
+    public function scopeAdmins($query)
+    {
+        return $query->whereHas('admin');
+    }
 }

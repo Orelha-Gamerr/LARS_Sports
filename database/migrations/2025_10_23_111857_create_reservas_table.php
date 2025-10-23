@@ -6,21 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('reservas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('cliente_id')->constrained()->onDelete('cascade');
+            $table->foreignId('quadra_id')->constrained()->onDelete('cascade');
+            $table->foreignId('horario_id')->constrained()->onDelete('cascade');
+            $table->date('data_reserva');
+            $table->enum('status', ['pendente', 'confirmado', 'cancelado', 'finalizado'])->default('pendente');
+            $table->decimal('valor_total', 8, 2);
+            $table->text('observacoes')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('reservas');
     }

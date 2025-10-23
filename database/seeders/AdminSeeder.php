@@ -2,16 +2,28 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        // Criar admin principal
+        $userAdmin = User::create([
+            'name' => 'Administrador',
+            'email' => 'admin@quadras.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        Admin::create([
+            'user_id' => $userAdmin->id,
+            'nivel_acesso' => 'superadmin',
+        ]);
+
+        // Criar mais admins
+        Admin::factory(2)->create();
     }
 }

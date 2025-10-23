@@ -5,26 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Horario extends Model
+class Quadra extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'quadra_id',
-        'horario_inicio',
-        'horario_fim',
-        'disponivel'
+        'nome',
+        'tipo',
+        'descricao',
+        'preco_hora',
+        'capacidade',
+        'disponivel',
+        'imagem'
     ];
 
     protected $casts = [
-        'horario_inicio' => 'datetime:H:i',
-        'horario_fim' => 'datetime:H:i',
         'disponivel' => 'boolean',
+        'preco_hora' => 'decimal:2',
     ];
 
-    public function quadra()
+    public function horarios()
     {
-        return $this->belongsTo(Quadra::class);
+        return $this->hasMany(Horario::class);
     }
 
     public function reservas()
@@ -37,8 +39,8 @@ class Horario extends Model
         return $query->where('disponivel', true);
     }
 
-    public function scopeDoDia($query, $diaSemana)
+    public function scopePorTipo($query, $tipo)
     {
-        return $query->where('dia_semana', $diaSemana);
+        return $query->where('tipo', $tipo);
     }
 }

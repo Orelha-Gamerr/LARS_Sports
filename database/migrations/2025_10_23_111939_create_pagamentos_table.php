@@ -6,21 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('pagamentos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('reserva_id')->constrained()->onDelete('cascade');
+            $table->decimal('valor', 8, 2);
+            $table->enum('metodo', ['pix', 'cartao_credito', 'cartao_debito', 'dinheiro']);
+            $table->enum('status', ['pendente', 'pago', 'cancelado', 'estornado'])->default('pendente');
+            $table->string('codigo_transacao')->nullable();
+            $table->timestamp('data_pagamento')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('pagamentos');
     }
