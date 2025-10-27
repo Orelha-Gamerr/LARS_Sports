@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('quadras', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('empresa_id')->constrained()->onDelete('cascade');
             $table->string('nome');
             $table->enum('tipo', ['society', 'futsal', 'volei', 'basquete', 'tenis']);
             $table->text('descricao')->nullable();
@@ -18,6 +19,9 @@ return new class extends Migration
             $table->boolean('disponivel')->default(true);
             $table->string('imagem')->nullable();
             $table->timestamps();
+            
+            $table->index('empresa_id');
+            $table->index('tipo');
         });
     }
 

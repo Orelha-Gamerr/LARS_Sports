@@ -11,7 +11,6 @@ class ClienteSeeder extends Seeder
 {
     public function run(): void
     {
-        // Criar cliente específico
         $userCliente = User::create([
             'name' => 'João Cliente',
             'email' => 'cliente@email.com',
@@ -26,7 +25,6 @@ class ClienteSeeder extends Seeder
             'endereco' => 'Rua Exemplo, 123',
         ]);
 
-        // Criar mais clientes com factory
         Cliente::factory(10)->create();
     }
 }

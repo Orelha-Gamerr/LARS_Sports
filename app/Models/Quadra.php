@@ -10,6 +10,7 @@ class Quadra extends Model
     use HasFactory;
 
     protected $fillable = [
+        'empresa_id',
         'nome',
         'tipo',
         'descricao',
@@ -23,6 +24,11 @@ class Quadra extends Model
         'disponivel' => 'boolean',
         'preco_hora' => 'decimal:2',
     ];
+
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
 
     public function horarios()
     {
@@ -42,5 +48,15 @@ class Quadra extends Model
     public function scopePorTipo($query, $tipo)
     {
         return $query->where('tipo', $tipo);
+    }
+
+    public function scopeDaEmpresa($query, $empresaId)
+    {
+        return $query->where('empresa_id', $empresaId);
+    }
+
+    public function scopeComEmpresa($query)
+    {
+        return $query->with('empresa');
     }
 }

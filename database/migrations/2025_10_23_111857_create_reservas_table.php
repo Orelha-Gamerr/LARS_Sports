@@ -18,6 +18,12 @@ return new class extends Migration
             $table->decimal('valor_total', 8, 2);
             $table->text('observacoes')->nullable();
             $table->timestamps();
+            
+            $table->index('cliente_id');
+            $table->index('quadra_id');
+            $table->index('horario_id');
+            $table->index('data_reserva');
+            $table->index('status');
         });
     }
 

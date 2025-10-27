@@ -46,7 +46,7 @@ class User extends Authenticatable
         ];
     }
 
-     public function cliente()
+    public function cliente()
     {
         return $this->hasOne(Cliente::class);
     }
@@ -61,11 +61,37 @@ class User extends Authenticatable
         return $this->admin !== null;
     }
 
+    public function isSuperAdmin()
+    {
+        return $this->admin && $this->admin->isSuperAdmin();
+    }
+
+    public function isAdminEmpresa()
+    {
+        return $this->admin && $this->admin->isAdminEmpresa();
+    }
+
     public function isCliente()
     {
         return $this->cliente !== null;
     }
 
+    // REMOVER o accessor empresa() que estava causando problemas
+    // Em vez disso, acesse através de $user->admin->empresa
+
+    public function getTipoUsuarioAttribute()
+    {
+        if ($this->isSuperAdmin()) {
+            return 'superadmin';
+        } elseif ($this->isAdminEmpresa()) {
+            return 'admin_empresa';
+        } elseif ($this->isCliente()) {
+            return 'cliente';
+        }
+        return 'usuario';
+    }
+
+    // Escopos
     public function scopeClientes($query)
     {
         return $query->whereHas('cliente');

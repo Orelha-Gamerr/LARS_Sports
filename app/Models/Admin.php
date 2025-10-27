@@ -11,6 +11,7 @@ class Admin extends Model
 
     protected $fillable = [
         'user_id',
+        'empresa_id',
         'nivel_acesso'
     ];
 
@@ -19,15 +20,28 @@ class Admin extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Acessor para nome através do user
-    public function getNomeAttribute()
+    public function empresa()
     {
-        return $this->user->name;
+        return $this->belongsTo(Empresa::class);
     }
 
-    // Acessor para email através do user
-    public function getEmailAttribute()
+    public function isSuperAdmin()
     {
-        return $this->user->email;
+        return is_null($this->empresa_id);
+    }
+
+    public function isAdminEmpresa()
+    {
+        return !is_null($this->empresa_id);
+    }
+
+    public function getTipoAdminAttribute()
+    {
+        return $this->isSuperAdmin() ? 'superadmin' : 'admin_empresa';
+    }
+
+    public function getNomeEmpresaAttribute()
+    {
+        return $this->empresa ? $this->empresa->nome : 'Sistema';
     }
 }

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->time('horario_fim');
             $table->boolean('disponivel')->default(true);
             $table->timestamps();
+            
+            $table->index('quadra_id');
         });
     }
 

@@ -2,40 +2,69 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
+use App\Models\Empresa;
 use App\Models\Quadra;
+use Illuminate\Database\Seeder;
 
 class QuadraSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
+        $empresas = Empresa::all();
+
         $quadras = [
             [
+                'empresa_id' => $empresas[0]->id,
                 'nome' => 'Quadra Society Principal',
                 'tipo' => 'society',
-                'descricao' => 'Quadra society oficial com grama sintética',
+                'descricao' => 'Quadra society oficial com grama sintética de última geração',
                 'preco_hora' => 180.00,
                 'capacidade' => 22,
                 'disponivel' => true,
             ],
             [
-                'nome' => 'Quadra Futsal',
+                'empresa_id' => $empresas[0]->id,
+                'nome' => 'Quadra Futsal Profissional',
                 'tipo' => 'futsal',
-                'descricao' => 'Quadra de futsal profissional',
+                'descricao' => 'Quadra de futsal com piso emborrachado profissional',
                 'preco_hora' => 120.00,
                 'capacidade' => 14,
                 'disponivel' => true,
             ],
             [
-                'nome' => 'Quadra Vôlei',
+                'empresa_id' => $empresas[1]->id,
+                'nome' => 'Quadra de Vôlei de Praia',
                 'tipo' => 'volei',
-                'descricao' => 'Quadra de vôlei de praia',
+                'descricao' => 'Quadra de vôlei de praia com areia especial',
                 'preco_hora' => 80.00,
                 'capacidade' => 12,
+                'disponivel' => true,
+            ],
+            [
+                'empresa_id' => $empresas[1]->id,
+                'nome' => 'Quadra de Basquete',
+                'tipo' => 'basquete',
+                'descricao' => 'Quadra de basquete oficial com tabelas profissionais',
+                'preco_hora' => 90.00,
+                'capacidade' => 10,
+                'disponivel' => true,
+            ],
+            [
+                'empresa_id' => $empresas[2]->id,
+                'nome' => 'Quadra de Tênis',
+                'tipo' => 'tenis',
+                'descricao' => 'Quadra de tênis com piso rápido',
+                'preco_hora' => 150.00,
+                'capacidade' => 4,
+                'disponivel' => true,
+            ],
+            [
+                'empresa_id' => $empresas[2]->id,
+                'nome' => 'Quadra Society II',
+                'tipo' => 'society',
+                'descricao' => 'Quadra society secundária com iluminação noturna',
+                'preco_hora' => 160.00,
+                'capacidade' => 20,
                 'disponivel' => true,
             ],
         ];
@@ -44,6 +73,8 @@ class QuadraSeeder extends Seeder
             Quadra::create($quadra);
         }
 
-        Quadra::factory(5)->create();
+        Quadra::factory(10)->create([
+            'empresa_id' => $empresas->random()->id
+        ]);
     }
 }

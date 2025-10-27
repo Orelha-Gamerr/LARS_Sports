@@ -10,13 +10,13 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('empresa_id')->nullable()->constrained()->onDelete('cascade');
             $table->enum('nivel_acesso', ['superadmin', 'admin', 'operador'])->default('operador');
             $table->timestamps();
             
             $table->index('user_id');
-            
-            $table->unique('user_id');
+            $table->index('empresa_id');
         });
     }
 

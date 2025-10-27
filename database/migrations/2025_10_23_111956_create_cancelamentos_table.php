@@ -16,6 +16,8 @@ return new class extends Migration
             $table->timestamp('data_cancelamento');
             $table->decimal('valor_estornado', 8, 2)->nullable();
             $table->timestamps();
+            
+            $table->index('reserva_id');
         });
     }
 

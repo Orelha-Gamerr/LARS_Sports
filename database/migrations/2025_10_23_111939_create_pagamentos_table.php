@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('codigo_transacao')->nullable();
             $table->timestamp('data_pagamento')->nullable();
             $table->timestamps();
+            
+            $table->index('reserva_id');
+            $table->index('status');
         });
     }
 
