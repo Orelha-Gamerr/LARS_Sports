@@ -29,38 +29,39 @@
                 </a>
 
                 @if(auth()->user()->isSuperAdmin())
-                    <a href="{{ route('empresas.index') }}"
+                    <a href="{{ route('super-admin.empresas.index') }}"
                         class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'empresas.') ? 'bg-blue-700 border-r-4 border-blue-300' : 'hover:bg-blue-700' }}">
                         <i class="fas fa-building w-6 text-center mr-3"></i>
                         <span>Empresas</span>
                     </a>
                 @endif
 
-                <a href="{{ route('clientes.index') }}"
+
+                <a href="{{ route('admin.clientes.index') }}"
                     class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'clientes.') ? 'bg-blue-700 border-r-4 border-blue-300' : 'hover:bg-blue-700' }}">
                     <i class="fas fa-users w-6 text-center mr-3"></i>
                     <span>Clientes</span>
                 </a>
 
-                <a href="{{ route('quadras.index') }}"
+                <a href="{{ route('admin.quadras.index') }}"
                     class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'quadras.') ? 'bg-blue-700 border-r-4 border-blue-300' : 'hover:bg-blue-700' }}">
                     <i class="fas fa-map-marker-alt w-6 text-center mr-3"></i>
                     <span>Quadras</span>
                 </a>
 
-                <a href="{{ route('horarios.index') }}"
+                <a href="{{ route('admin.horarios.index') }}"
                     class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'horarios.') ? 'bg-blue-700 border-r-4 border-blue-300' : 'hover:bg-blue-700' }}">
                     <i class="fas fa-clock w-6 text-center mr-3"></i>
                     <span>Horários</span>
                 </a>
 
-                <a href="{{ route('reservas.index') }}"
+                <a href="{{ route('admin.reservas.index') }}"
                     class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'reservas.') ? 'bg-blue-700 border-r-4 border-blue-300' : 'hover:bg-blue-700' }}">
                     <i class="fas fa-calendar-alt w-6 text-center mr-3"></i>
                     <span>Reservas</span>
                 </a>
 
-                <a href="{{ route('pagamentos.index') }}"
+                <a href="{{ route('admin.pagamentos.index') }}"
                     class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'pagamentos.') ? 'bg-blue-700 border-r-4 border-blue-300' : 'hover:bg-blue-700' }}">
                     <i class="fas fa-money-bill-wave w-6 text-center mr-3"></i>
                     <span>Pagamentos</span>

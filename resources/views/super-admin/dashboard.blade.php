@@ -70,7 +70,7 @@
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex justify-between items-center">
                 <h3 class="text-lg font-medium text-gray-900">Empresas Cadastradas</h3>
-                <a href="{{ route('empresas.index') }}" class="text-purple-600 hover:text-purple-800 text-sm font-medium">
+                <a href="{{ route('super-admin.empresas.index') }}" class="text-purple-600 hover:text-purple-800 text-sm font-medium">
                     Ver todas
                 </a>
             </div>
@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('empresas.show', $empresa) }}" class="text-purple-600 hover:text-purple-800">
+                        <a href="{{ route('super-admin.empresas.show', $empresa) }}" class="text-purple-600 hover:text-purple-800">
                             <i class="fas fa-chevron-right"></i>
                         </a>
                     </div>
@@ -105,7 +105,7 @@
                 <div class="text-center py-8">
                     <i class="fas fa-building text-4xl text-gray-300 mb-4"></i>
                     <p class="text-gray-500">Nenhuma empresa cadastrada.</p>
-                    <a href="{{ route('empresas.create') }}" class="inline-block mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+                    <a href="{{ route('super-admin.empresas.create') }}" class="inline-block mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
                         Cadastrar Primeira Empresa
                     </a>
                 </div>
@@ -142,10 +142,10 @@
             </div>
             
             <div class="mt-6 grid grid-cols-2 gap-4">
-                <a href="{{ route('empresas.create') }}" class="bg-purple-600 text-white text-center py-2 px-4 rounded hover:bg-purple-700 transition">
+                <a href="{{ route('super-admin.empresas.create') }}" class="bg-purple-600 text-white text-center py-2 px-4 rounded hover:bg-purple-700 transition">
                     Nova Empresa
                 </a>
-                <a href="{{ route('super-admin.relatorios') }}" class="bg-gray-600 text-white text-center py-2 px-4 rounded hover:bg-gray-700 transition">
+                <a href="{{ route('super-admin.relatorios.index') }}" class="bg-gray-600 text-white text-center py-2 px-4 rounded hover:bg-gray-700 transition">
                     Relatórios
                 </a>
             </div>

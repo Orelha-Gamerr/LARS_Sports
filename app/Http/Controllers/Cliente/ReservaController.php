@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers\Cliente;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Cliente\ClienteBaseController;
 use App\Models\Reserva;
 use App\Models\Quadra;
 use App\Models\Horario;
 use Illuminate\Http\Request;
 
-class ReservaController extends Controller
+class ReservaController extends ClienteBaseController
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('cliente');
-    }
 
     public function index()
     {

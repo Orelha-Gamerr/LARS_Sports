@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\SuperAdmin\SuperAdminBaseController;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class EmpresaController extends Controller
+class EmpresaController extends SuperAdminBaseController
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('super-admin');
-    }
 
     public function index()
     {

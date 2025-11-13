@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers\Cliente;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Cliente\ClienteBaseController;
 use App\Models\Pagamento;
 use Illuminate\Http\Request;
 
-class PagamentoController extends Controller
+class PagamentoController extends ClienteBaseController
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('cliente');
-    }
-
     public function index()
     {
         $cliente = auth()->user()->cliente;

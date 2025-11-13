@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminBaseController;
 use App\Models\Cancelamento;
 use App\Models\Reserva;
 use Illuminate\Http\Request;
 
-class CancelamentoController extends Controller
+class CancelamentoController extends AdminBaseController
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('admin');
-    }
+
 
     public function index()
     {

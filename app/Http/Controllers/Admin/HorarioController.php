@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminBaseController;
 use App\Models\Horario;
 use App\Models\Quadra;
 use Illuminate\Http\Request;
 
-class HorarioController extends Controller
+class HorarioController extends AdminBaseController
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('admin');
-    }
+
 
     public function index()
     {

@@ -13,8 +13,9 @@
     </div>
 </div>
 
+{{-- MÉTRICAS PRINCIPAIS --}}
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-<div class="bg-white rounded-lg shadow p-6">
+    <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
             <div class="p-3 rounded-full bg-blue-100 text-blue-500">
                 <i class="fas fa-calendar-alt text-xl"></i>
@@ -64,51 +65,9 @@
     </div>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-    <div class="bg-white rounded-lg shadow p-6">
-        <div class="flex items-center">
-            <div class="p-3 rounded-full bg-green-100 text-green-500">
-                <i class="fas fa-money-bill-wave text-xl"></i>
-            </div>
-            <div class="ml-4">
-                <p class="text-sm font-medium text-gray-600">Faturamento Mensal</p>
-                <p class="text-2xl font-semibold text-gray-900">R$ {{ number_format($faturamentoMensal, 2, ',', '.') }}</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-white rounded-lg shadow p-6">
-        <div class="flex items-center">
-            <div class="p-3 rounded-full bg-blue-100 text-blue-500">
-                <i class="fas fa-chart-line text-xl"></i>
-            </div>
-            <div class="ml-4">
-                <p class="text-sm font-medium text-gray-600">Taxa de Confirmação</p>
-                <p class="text-2xl font-semibold text-gray-900">
-                    {{ $totalReservas > 0 ? number_format(($reservasConfirmadas / $totalReservas) * 100, 1) : 0 }}%
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-white rounded-lg shadow p-6">
-        <div class="flex items-center">
-            <div class="p-3 rounded-full bg-purple-100 text-purple-500">
-                <i class="fas fa-user-friends text-xl"></i>
-            </div>
-            <div class="ml-4">
-                <p class="text-sm font-medium text-gray-600">Média por Cliente</p>
-                <p class="text-2xl font-semibold text-gray-900">
-                    {{ $totalClientes > 0 ? number_format($totalReservas / $totalClientes, 1) : 0 }}
-                </p>
-                <p class="text-xs text-gray-500 mt-1">reservas por cliente</p>
-            </div>
-        </div>
-    </div>
-</div>
-
+{{-- LINKS RÁPIDOS --}}
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-    <a href="{{ route('reservas.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-blue-300">
+    <a href="{{ route('admin.reservas.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-blue-300">
         <div class="flex items-center space-x-3">
             <div class="p-2 bg-blue-100 rounded-lg">
                 <i class="fas fa-calendar-alt text-blue-600"></i>
@@ -120,7 +79,7 @@
         </div>
     </a>
     
-    <a href="{{ route('clientes.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-green-300">
+    <a href="{{ route('admin.clientes.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-green-300">
         <div class="flex items-center space-x-3">
             <div class="p-2 bg-green-100 rounded-lg">
                 <i class="fas fa-users text-green-600"></i>
@@ -132,7 +91,7 @@
         </div>
     </a>
     
-    <a href="{{ route('quadras.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-orange-300">
+    <a href="{{ route('admin.quadras.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-orange-300">
         <div class="flex items-center space-x-3">
             <div class="p-2 bg-orange-100 rounded-lg">
                 <i class="fas fa-map-marker-alt text-orange-600"></i>
@@ -144,7 +103,7 @@
         </div>
     </a>
     
-    <a href="{{ route('quadras.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-purple-300">
+    <a href="{{ route('admin.relatorios.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-purple-300">
         <div class="flex items-center space-x-3">
             <div class="p-2 bg-purple-100 rounded-lg">
                 <i class="fas fa-chart-bar text-purple-600"></i>
@@ -157,6 +116,7 @@
     </a>
 </div>
 
+{{-- INFORMAÇÕES DA EMPRESA --}}
 <div class="bg-white rounded-lg shadow mb-8">
     <div class="px-6 py-4 border-b border-gray-200">
         <h3 class="text-lg font-medium text-gray-900">Informações da Empresa</h3>
@@ -206,11 +166,12 @@
     </div>
 </div>
 
+{{-- RESERVAS RECENTES --}}
 <div class="bg-white rounded-lg shadow">
     <div class="px-6 py-4 border-b border-gray-200">
         <div class="flex justify-between items-center">
             <h3 class="text-lg font-medium text-gray-900">Reservas Recentes</h3>
-            <a href="{{ route('reservas.index') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
+            <a href="{{ route('admin.reservas.index') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
                 Ver todas
             </a>
         </div>

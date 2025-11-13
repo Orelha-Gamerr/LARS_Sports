@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\Cliente;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Cliente\ClienteBaseController;
 use App\Models\Reserva;
 use App\Models\Quadra;
-use Illuminate\Http\Request;
 
-class ClienteDashboardController extends Controller
+class ClienteDashboardController extends ClienteBaseController
 {
-    public function __construct()
+    protected function checkRole($user)
     {
-        $this->middleware('auth');
-        $this->middleware('cliente');
+        if (!$user->isCliente()) {
+            return redirect()->route('home')->withErrors('Acesso restrito a clientes.');
+        }
+        return true;
     }
 
     public function index()
     {
-        $cliente = auth()->user()->cliente;
+        $cliente = $this->user->cliente;
 
         $totalReservas = Reserva::where('cliente_id', $cliente->id)->count();
         $reservasConfirmadas = Reserva::where('cliente_id', $cliente->id)

@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\SuperAdmin\SuperAdminBaseController;
 use App\Models\Reserva;
 use App\Models\Cliente;
 use App\Models\Quadra;
 use App\Models\Empresa;
-use Illuminate\Http\Request;
 
-class SuperAdminDashboardController extends Controller
+class SuperAdminDashboardController extends SuperAdminBaseController
 {
-    public function __construct()
+    protected function checkRole($user)
     {
-        $this->middleware('auth');
-        $this->middleware('super-admin');
+        if (!$user->isSuperAdmin()) {
+            return redirect()->route('home')->withErrors('Acesso restrito a super administradores.');
+        }
+        return true;
     }
 
     public function index()

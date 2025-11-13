@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers\Cliente;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Cliente\ClienteBaseController;
 use App\Models\Cliente;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class PerfilController extends Controller
+class PerfilController extends ClienteBaseController
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('cliente');
-    }
 
     public function show()
     {

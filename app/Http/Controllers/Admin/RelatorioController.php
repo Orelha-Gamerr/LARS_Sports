@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminBaseController;
+
 use Illuminate\Http\Request;
 
-class RelatorioController extends Controller
+class RelatorioController extends AdminBaseController
 {
     //
 }

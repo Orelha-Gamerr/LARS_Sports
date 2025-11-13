@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminBaseController;
 use App\Models\Reserva;
 use App\Models\Cliente;
 use App\Models\Quadra;
-use Illuminate\Http\Request;
 
-class AdminDashboardController extends Controller
+class AdminDashboardController extends AdminBaseController
 {
-    public function __construct()
+    protected function checkRole($user)
     {
-        $this->middleware('auth');
-        $this->middleware('admin');
+        if (!$user->isAdminEmpresa()) {
+            return redirect()->route('home')->withErrors('Acesso restrito a administradores.');
+        }
+        return true;
     }
 
     public function index()
     {
-        $user = auth()->user();
+        $user = $this->user;
         $empresa = $user->admin->empresa;
 
         $totalReservas = Reserva::whereHas('quadra', function($query) use ($empresa) {
@@ -65,19 +66,13 @@ class AdminDashboardController extends Controller
 
     public function relatorios()
     {
-        $user = auth()->user();
-        $empresa = $user->admin->empresa;
-        
-        // Lógica específica para relatórios do admin
+        $empresa = $this->user->admin->empresa;
         return view('admin.relatorios.index', compact('empresa'));
     }
 
     public function relatorioFinanceiro()
     {
-        $user = auth()->user();
-        $empresa = $user->admin->empresa;
-        
-        // Lógica específica para relatório financeiro
+        $empresa = $this->user->admin->empresa;
         return view('admin.relatorios.financeiro', compact('empresa'));
     }
 }

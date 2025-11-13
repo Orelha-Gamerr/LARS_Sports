@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminBaseController;
 use App\Models\Quadra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class QuadraController extends Controller
+class QuadraController extends AdminBaseController
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('admin');
-    }
 
     public function index()
     {

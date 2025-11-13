@@ -2,51 +2,41 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Reserva;
 use App\Models\Cliente;
 use App\Models\Quadra;
 use App\Models\Horario;
 use Illuminate\Http\Request;
 
-class ReservaController extends Controller
+class ReservaController extends AdminBaseController
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('admin');
-    }
-
     public function index()
     {
-        $user = auth()->user();
-        $empresa = $user->admin->empresa;
-
-        $reservas = Reserva::whereHas('quadra', function($query) use ($empresa) {
-            $query->where('empresa_id', $empresa->id);
-        })->with(['cliente.user', 'quadra', 'horario'])->paginate(10);
+        $empresa = $this->empresa;
+        $reservas = Reserva::whereHas('quadra', function($q) use ($empresa) {
+            $q->where('empresa_id', $empresa->id);
+        })
+        ->with(['cliente.user', 'quadra', 'horario'])
+        ->orderBy('data_reserva', 'desc')
+        ->paginate(10);
 
         return view('admin.reservas.index', compact('reservas', 'empresa'));
     }
 
     public function create()
     {
-        $user = auth()->user();
-        $empresa = $user->admin->empresa;
-
+        $empresa = $this->empresa;
         $clientes = Cliente::with('user')->get();
         $quadras = Quadra::where('empresa_id', $empresa->id)->where('disponivel', true)->get();
-        $horarios = Horario::whereHas('quadra', function($query) use ($empresa) {
-            $query->where('empresa_id', $empresa->id);
-        })->where('disponivel', true)->get();
+        $horarios = Horario::whereHas('quadra', fn($q) => $q->where('empresa_id', $empresa->id))
+            ->where('disponivel', true)->get();
 
         return view('admin.reservas.create', compact('clientes', 'quadras', 'horarios', 'empresa'));
     }
 
     public function store(Request $request)
     {
-        $user = auth()->user();
-        $empresa = $user->admin->empresa;
+        $empresa = $this->empresa;
 
         $data = $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
@@ -56,7 +46,6 @@ class ReservaController extends Controller
             'observacoes' => 'nullable|string'
         ]);
 
-        // Verificar se a quadra pertence à empresa
         $quadra = Quadra::findOrFail($data['quadra_id']);
         if ($quadra->empresa_id != $empresa->id) {
             abort(403, 'Quadra não pertence a esta empresa.');
@@ -74,7 +63,6 @@ class ReservaController extends Controller
 
         $data['valor_total'] = $quadra->preco_hora;
         $data['status'] = 'pendente';
-
         Reserva::create($data);
 
         return redirect()->route('admin.reservas.index')->with('success', 'Reserva criada com sucesso!');
@@ -82,10 +70,7 @@ class ReservaController extends Controller
 
     public function show(Reserva $reserva)
     {
-        $user = auth()->user();
-        $empresa = $user->admin->empresa;
-
-        if ($reserva->quadra->empresa_id != $empresa->id) {
+        if ($reserva->quadra->empresa_id != $this->empresa->id) {
             abort(403, 'Acesso não autorizado.');
         }
 
@@ -94,30 +79,21 @@ class ReservaController extends Controller
 
     public function edit(Reserva $reserva)
     {
-        $user = auth()->user();
-        $empresa = $user->admin->empresa;
-
-        if ($reserva->quadra->empresa_id != $empresa->id) {
-            abort(403, 'Acesso não autorizado.');
-        }
+        $empresa = $this->empresa;
+        if ($reserva->quadra->empresa_id != $empresa->id) abort(403, 'Acesso não autorizado.');
 
         $clientes = Cliente::with('user')->get();
         $quadras = Quadra::where('empresa_id', $empresa->id)->where('disponivel', true)->get();
-        $horarios = Horario::whereHas('quadra', function($query) use ($empresa) {
-            $query->where('empresa_id', $empresa->id);
-        })->where('disponivel', true)->get();
+        $horarios = Horario::whereHas('quadra', fn($q) => $q->where('empresa_id', $empresa->id))
+            ->where('disponivel', true)->get();
 
         return view('admin.reservas.edit', compact('reserva', 'clientes', 'quadras', 'horarios'));
     }
 
     public function update(Request $request, Reserva $reserva)
     {
-        $user = auth()->user();
-        $empresa = $user->admin->empresa;
-
-        if ($reserva->quadra->empresa_id != $empresa->id) {
-            abort(403, 'Acesso não autorizado.');
-        }
+        $empresa = $this->empresa;
+        if ($reserva->quadra->empresa_id != $empresa->id) abort(403, 'Acesso não autorizado.');
 
         $data = $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
@@ -128,51 +104,42 @@ class ReservaController extends Controller
             'observacoes' => 'nullable|string'
         ]);
 
-        // Verificar se a nova quadra pertence à empresa
         $quadra = Quadra::findOrFail($data['quadra_id']);
-        if ($quadra->empresa_id != $empresa->id) {
-            abort(403, 'Quadra não pertence a esta empresa.');
-        }
+        if ($quadra->empresa_id != $empresa->id) abort(403, 'Quadra não pertence a esta empresa.');
 
         if ($reserva->quadra_id != $data['quadra_id']) {
             $data['valor_total'] = $quadra->preco_hora;
         }
 
         $reserva->update($data);
-
         return redirect()->route('admin.reservas.index')->with('success', 'Reserva atualizada com sucesso!');
     }
 
     public function destroy(Reserva $reserva)
     {
-        $user = auth()->user();
-        $empresa = $user->admin->empresa;
-
-        if ($reserva->quadra->empresa_id != $empresa->id) {
+        if ($reserva->quadra->empresa_id != $this->empresa->id) {
             abort(403, 'Acesso não autorizado.');
         }
 
         $reserva->delete();
-
         return redirect()->route('admin.reservas.index')->with('success', 'Reserva excluída com sucesso!');
     }
 
     public function search(Request $request)
     {
-        $user = auth()->user();
-        $empresa = $user->admin->empresa;
-
+        $empresa = $this->empresa;
         $search = $request->get('search');
-        $reservas = Reserva::whereHas('quadra', function($query) use ($empresa) {
-            $query->where('empresa_id', $empresa->id);
-        })->where(function($query) use ($search) {
-            $query->whereHas('cliente.user', function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
-            })->orWhereHas('quadra', function ($q) use ($search) {
-                $q->where('nome', 'like', "%{$search}%");
-            });
-        })->with(['cliente.user', 'quadra', 'horario'])
-          ->paginate(10);
+
+        $reservas = Reserva::whereHas('quadra', function($q) use ($empresa) {
+            $q->where('empresa_id', $empresa->id);
+        })
+        ->where(function($q) use ($search) {
+            $q->whereHas('cliente.user', fn($u) => $u->where('name', 'like', "%{$search}%"))
+              ->orWhereHas('quadra', fn($quadra) => $quadra->where('nome', 'like', "%{$search}%"));
+        })
+        ->with(['cliente.user', 'quadra', 'horario'])
+        ->orderBy('data_reserva', 'desc')
+        ->paginate(10);
 
         return view('admin.reservas.index', compact('reservas'));
     }

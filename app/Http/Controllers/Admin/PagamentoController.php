@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminBaseController;
 use App\Models\Pagamento;
 use App\Models\Reserva;
 use Illuminate\Http\Request;
 
-class PagamentoController extends Controller
+class PagamentoController extends AdminBaseController
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('admin');
-    }
 
     public function index()
     {
