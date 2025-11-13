@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            SuperAdminSeeder::class,
             EmpresaSeeder::class,
             AdminSeeder::class,
             ClienteSeeder::class,
@@ -27,3 +28,4 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 }
+

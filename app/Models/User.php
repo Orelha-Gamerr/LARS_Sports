@@ -2,42 +2,25 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -56,6 +39,11 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class);
     }
 
+    public function superAdmin()
+    {
+        return $this->hasOne(SuperAdmin::class);
+    }
+
     public function isAdmin()
     {
         return $this->admin !== null;
@@ -63,21 +51,18 @@ class User extends Authenticatable
 
     public function isSuperAdmin()
     {
-        return $this->admin && $this->admin->isSuperAdmin();
+        return $this->superAdmin !== null;
     }
 
     public function isAdminEmpresa()
     {
-        return $this->admin && $this->admin->isAdminEmpresa();
+        return $this->admin !== null;
     }
 
     public function isCliente()
     {
         return $this->cliente !== null;
     }
-
-    // REMOVER o accessor empresa() que estava causando problemas
-    // Em vez disso, acesse através de $user->admin->empresa
 
     public function getTipoUsuarioAttribute()
     {
@@ -91,7 +76,14 @@ class User extends Authenticatable
         return 'usuario';
     }
 
-    // Escopos
+    public function getEmpresaAttribute()
+    {
+        if ($this->isAdminEmpresa()) {
+            return $this->admin->empresa;
+        }
+        return null;
+    }
+
     public function scopeClientes($query)
     {
         return $query->whereHas('cliente');
@@ -100,5 +92,10 @@ class User extends Authenticatable
     public function scopeAdmins($query)
     {
         return $query->whereHas('admin');
+    }
+
+    public function scopeSuperAdmins($query)
+    {
+        return $query->whereHas('superAdmin');
     }
 }

@@ -8,22 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('super_admins', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('empresa_id')->constrained()->onDelete('cascade'); // OBRIGATÓRIO
+            $table->string('telefone')->nullable();
             $table->timestamps();
             
             $table->index('user_id');
-            $table->index('empresa_id');
-            
-            // Garantir que um user só seja admin de uma empresa
-            $table->unique('user_id');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('super_admins');
     }
 };

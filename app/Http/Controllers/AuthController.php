@@ -53,28 +53,47 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'telefone' => 'required|string|max:20',
-            'cpf' => 'required|string|unique:clientes,cpf',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'tipo' => 'required|in:cliente,admin,superadmin', 
+            'telefone' => 'required_if:tipo,cliente|string|max:20',
+            'cpf' => 'required_if:tipo,cliente|string|max:14|unique:clientes,cpf',
+            'empresa_id' => 'required_if:tipo,admin|exists:empresas,id',
         ]);
 
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
-        Cliente::create([
-            'user_id' => $user->id,
-            'telefone' => $data['telefone'],
-            'cpf' => $data['cpf'],
-        ]);
+        if ($request->tipo === 'cliente') {
+            Cliente::create([
+                'user_id' => $user->id,
+                'telefone' => $request->telefone,
+                'cpf' => $request->cpf,
+                'data_nascimento' => $request->data_nascimento,
+                'endereco' => $request->endereco,
+            ]);
+        } elseif ($request->tipo === 'admin') {
+            Admin::create([
+                'user_id' => $user->id,
+                'empresa_id' => $request->empresa_id,
+            ]);
+        } elseif ($request->tipo === 'superadmin') {
+            if (!auth()->check() || !auth()->user()->isSuperAdmin()) {
+                abort(403, 'Apenas super administradores podem criar novos super administradores.');
+            }
+            SuperAdmin::create([
+                'user_id' => $user->id,
+                'telefone' => $request->telefone,
+            ]);
+        }
 
         Auth::login($user);
 
-        return redirect()->route('cliente.dashboard')->with('success', 'Conta criada com sucesso!');
+        return redirect()->route('home');
     }
 }

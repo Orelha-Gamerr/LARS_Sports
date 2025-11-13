@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Model
+class SuperAdmin extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'empresa_id'
+        'telefone'
     ];
 
     public function user()
@@ -19,13 +19,13 @@ class Admin extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function empresa()
+    public function getNomeAttribute()
     {
-        return $this->belongsTo(Empresa::class);
+        return $this->user->name;
     }
 
-    public function getNomeEmpresaAttribute()
+    public function getEmailAttribute()
     {
-        return $this->empresa->nome;
+        return $this->user->email;
     }
 }

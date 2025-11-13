@@ -11,29 +11,29 @@ class EmpresaSeeder extends Seeder
     {
         $empresas = [
             [
-                'nome' => 'Complexo Esportivo Central',
-                'cnpj' => '12.345.678/0001-95',
-                'telefone' => '(11) 3333-3333',
-                'email' => 'central@complexo.com',
-                'endereco' => 'Rua Central, 123 - Centro, São Paulo - SP',
+                'nome' => 'Arena Sports Center',
+                'cnpj' => '12.345.678/0001-90',
+                'telefone' => '(11) 3333-4444',
+                'email' => 'contato@arenasports.com',
+                'endereco' => 'Av. Paulista, 1000 - São Paulo, SP',
                 'responsavel' => 'João Silva',
                 'ativa' => true,
             ],
             [
                 'nome' => 'Clube dos Atletas',
-                'cnpj' => '98.765.432/0001-87',
-                'telefone' => '(11) 4444-4444',
+                'cnpj' => '98.765.432/0001-10',
+                'telefone' => '(11) 2222-3333',
                 'email' => 'contato@clubedosatletas.com',
-                'endereco' => 'Av. dos Esportes, 456 - Bairro Novo, São Paulo - SP',
+                'endereco' => 'Rua Augusta, 500 - São Paulo, SP',
                 'responsavel' => 'Maria Santos',
                 'ativa' => true,
             ],
             [
-                'nome' => 'Arena Sports',
-                'cnpj' => '55.666.777/0001-33',
-                'telefone' => '(11) 5555-5555',
-                'email' => 'arena@sports.com',
-                'endereco' => 'Rua das Arenas, 789 - Zona Leste, São Paulo - SP',
+                'nome' => 'Complexo Vôlei Praia',
+                'cnpj' => '11.222.333/0001-44',
+                'telefone' => '(21) 4444-5555',
+                'email' => 'contato@voleipraia.com',
+                'endereco' => 'Praia de Ipanema, 200 - Rio de Janeiro, RJ',
                 'responsavel' => 'Carlos Oliveira',
                 'ativa' => true,
             ]
@@ -42,5 +42,7 @@ class EmpresaSeeder extends Seeder
         foreach ($empresas as $empresa) {
             Empresa::create($empresa);
         }
+
+        $this->command->info('✅ ' . count($empresas) . ' empresas criadas com sucesso!');
     }
 }
