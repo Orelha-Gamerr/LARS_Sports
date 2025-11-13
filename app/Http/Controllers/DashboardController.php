@@ -15,10 +15,14 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->isAdmin()) {
+        if ($user->isSuperAdmin()) {
+            return redirect()->route('super-admin.dashboard');
+        } elseif ($user->isAdminEmpresa()) {
             return redirect()->route('admin.dashboard');
-        } else {
+        } elseif ($user->isCliente()) {
             return redirect()->route('cliente.dashboard');
         }
+        
+        return redirect()->route('login');
     }
 }

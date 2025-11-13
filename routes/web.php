@@ -3,18 +3,24 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\QuadraController;
-use App\Http\Controllers\HorarioController;
-use App\Http\Controllers\ReservaController;
-use App\Http\Controllers\PagamentoController;
-use App\Http\Controllers\CancelamentoController;
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\ClienteDashboardController;
-use App\Http\Controllers\SuperAdminDashboardController;
-use App\Http\Controllers\EmpresaController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\ClienteController as AdminClienteController;
+use App\Http\Controllers\Admin\QuadraController as AdminQuadraController;
+use App\Http\Controllers\Admin\HorarioController as AdminHorarioController;
+use App\Http\Controllers\Admin\ReservaController as AdminReservaController;
+use App\Http\Controllers\Admin\PagamentoController as AdminPagamentoController;
+use App\Http\Controllers\Admin\CancelamentoController as AdminCancelamentoController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Cliente\ClienteDashboardController;
+use App\Http\Controllers\Cliente\ReservaController as ClienteReservaController;
+use App\Http\Controllers\Cliente\PagamentoController as ClientePagamentoController;
+use App\Http\Controllers\Cliente\PerfilController as ClientePerfilController;
+use App\Http\Controllers\SuperAdmin\SuperAdminDashboardController;
+use App\Http\Controllers\SuperAdmin\EmpresaController;
+use App\Http\Controllers\SuperAdmin\RelatorioController as SuperAdminRelatorioController;
+use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\QuadraController as PublicQuadraController;
 
+// ========== ROTAS PÚBLICAS ==========
 Route::get('/', function () {
     return redirect()->route('quadras.public');
 });
@@ -23,10 +29,12 @@ Route::get('/sobre', [HomeController::class, 'about'])->name('about');
 Route::get('/contato', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contato', [HomeController::class, 'sendContact'])->name('contact.send');
 
-Route::get('/quadras', [QuadraController::class, 'publicIndex'])->name('quadras.public');
-Route::get('/quadras/{quadra}', [QuadraController::class, 'publicShow'])->name('quadras.public.show');
-Route::post('/quadras/search', [QuadraController::class, 'publicSearch'])->name('quadras.public.search');
+// Quadras públicas
+Route::get('/quadras', [PublicQuadraController::class, 'publicIndex'])->name('quadras.public');
+Route::get('/quadras/{quadra}', [PublicQuadraController::class, 'publicShow'])->name('quadras.public.show');
+Route::post('/quadras/search', [PublicQuadraController::class, 'publicSearch'])->name('quadras.public.search');
 
+// Autenticação
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login');
@@ -41,57 +49,75 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
 
     // ========== ÁREA DO SUPER ADMIN ==========
-    Route::middleware(['super-admin'])->group(function () {
-        Route::get('/super-admin/dashboard', [SuperAdminDashboardController::class, 'index'])->name('super-admin.dashboard');
-        Route::get('/super-admin/relatorios', [SuperAdminDashboardController::class, 'relatorios'])->name('super-admin.relatorios');
+    Route::middleware(['super-admin'])->prefix('super-admin')->name('super-admin.')->group(function () {
+        Route::get('/dashboard', [SuperAdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/relatorios', [SuperAdminRelatorioController::class, 'index'])->name('relatorios');
         Route::resource('empresas', EmpresaController::class);
-        
         Route::post('/empresas/search', [EmpresaController::class, 'search'])->name('empresas.search');
     });
 
     // ========== ÁREA DO ADMIN DA EMPRESA ==========
-    Route::middleware(['admin'])->group(function () {
-        Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         
-        Route::resource('clientes', ClienteController::class);
-        Route::post('/clientes/search', [ClienteController::class, 'search'])->name('clientes.search');
+        Route::prefix('clientes')->name('clientes.')->group(function () {
+            Route::get('/', [AdminClienteController::class, 'index'])->name('index');
+            Route::get('/create', [AdminClienteController::class, 'create'])->name('create');
+            Route::post('/', [AdminClienteController::class, 'store'])->name('store');
+            Route::get('/{cliente}', [AdminClienteController::class, 'show'])->name('show');
+            Route::get('/{cliente}/edit', [AdminClienteController::class, 'edit'])->name('edit');
+            Route::put('/{cliente}', [AdminClienteController::class, 'update'])->name('update');
+            Route::delete('/{cliente}', [AdminClienteController::class, 'destroy'])->name('destroy');
+            Route::post('/search', [AdminClienteController::class, 'search'])->name('search');
+        });
         
-        Route::resource('horarios', HorarioController::class);
-        Route::post('/horarios/search', [HorarioController::class, 'search'])->name('horarios.search');
+        // Quadras
+        Route::resource('quadras', AdminQuadraController::class);
+        Route::post('/quadras/search', [AdminQuadraController::class, 'search'])->name('quadras.search');
         
-        Route::resource('cancelamentos', CancelamentoController::class);
-        Route::post('/cancelamentos/search', [CancelamentoController::class, 'search'])->name('cancelamentos.search');
+        // Horários
+        Route::resource('horarios', AdminHorarioController::class);
+        Route::post('/horarios/search', [AdminHorarioController::class, 'search'])->name('horarios.search');
         
-        Route::resource('quadras', QuadraController::class);
-        Route::post('/quadras/search', [QuadraController::class, 'search'])->name('quadras.search');
+        // Reservas
+        Route::resource('reservas', AdminReservaController::class);
+        Route::post('/reservas/search', [AdminReservaController::class, 'search'])->name('reservas.search');
         
-        Route::resource('pagamentos', PagamentoController::class);
-        Route::post('/pagamentos/search', [PagamentoController::class, 'search'])->name('pagamentos.search');
+        // Pagamentos
+        Route::resource('pagamentos', AdminPagamentoController::class);
+        Route::post('/pagamentos/search', [AdminPagamentoController::class, 'search'])->name('pagamentos.search');
         
-        Route::resource('reservas', ReservaController::class);
-        Route::post('/reservas/search', [ReservaController::class, 'search'])->name('reservas.search');
+        // Cancelamentos
+        Route::resource('cancelamentos', AdminCancelamentoController::class);
+        Route::post('/cancelamentos/search', [AdminCancelamentoController::class, 'search'])->name('cancelamentos.search');
     });
 
-    // ========== ÁREA DO CLIENTE (requer autenticação) ==========
-    Route::middleware(['cliente'])->group(function () {
-        Route::get('/cliente/dashboard', [ClienteDashboardController::class, 'index'])->name('cliente.dashboard');
+    // ========== ÁREA DO CLIENTE ==========
+    Route::middleware(['cliente'])->prefix('cliente')->name('cliente.')->group(function () {
+        Route::get('/dashboard', [ClienteDashboardController::class, 'index'])->name('dashboard');
         
-        Route::resource('reservas', ReservaController::class)->except(['index']);
-        Route::get('/minhas-reservas', [ReservaController::class, 'index'])->name('reservas.index');
-        Route::post('/reservas/search', [ReservaController::class, 'search'])->name('reservas.search');
+        // Perfil
+        Route::prefix('perfil')->name('perfil.')->group(function () {
+            Route::get('/', [ClientePerfilController::class, 'show'])->name('show');
+            Route::get('/edit', [ClientePerfilController::class, 'edit'])->name('edit');
+            Route::put('/update', [ClientePerfilController::class, 'update'])->name('update');
+        });
         
-        Route::resource('pagamentos', PagamentoController::class)->only(['index', 'show']);
-        Route::post('/pagamentos/search', [PagamentoController::class, 'search'])->name('pagamentos.search');
+        // Reservas do cliente
+        Route::prefix('reservas')->name('reservas.')->group(function () {
+            Route::get('/', [ClienteReservaController::class, 'index'])->name('index');
+            Route::get('/create', [ClienteReservaController::class, 'create'])->name('create');
+            Route::post('/', [ClienteReservaController::class, 'store'])->name('store');
+            Route::get('/{reserva}', [ClienteReservaController::class, 'show'])->name('show');
+            Route::get('/{reserva}/edit', [ClienteReservaController::class, 'edit'])->name('edit');
+            Route::put('/{reserva}', [ClienteReservaController::class, 'update'])->name('update');
+            Route::delete('/{reserva}', [ClienteReservaController::class, 'destroy'])->name('destroy');
+        });
         
-        Route::get('/cliente/perfil', [ClienteController::class, 'profile'])->name('cliente.profile');
-        Route::put('/cliente/perfil', [ClienteController::class, 'updateProfile'])->name('cliente.profile.update');
+        // Pagamentos do cliente
+        Route::prefix('pagamentos')->name('pagamentos.')->group(function () {
+            Route::get('/', [ClientePagamentoController::class, 'index'])->name('index');
+            Route::get('/{pagamento}', [ClientePagamentoController::class, 'show'])->name('show');
+        });
     });
-
-    // ========== ROTAS COMUNS PARA TODOS OS USUÁRIOS AUTENTICADOS ==========
-    
-    Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/perfil', [ProfileController::class, 'update'])->name('profile.update');
-    
-    Route::get('/perfil/alterar-senha', [ProfileController::class, 'changePassword'])->name('profile.change-password');
-    Route::put('/perfil/alterar-senha', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 });

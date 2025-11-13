@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\SuperAdmin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -11,23 +12,18 @@ class EmpresaController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (!auth()->user()->isSuperAdmin()) {
-                abort(403, 'Acesso não autorizado. Apenas Super Admin pode gerenciar empresas.');
-            }
-            return $next($request);
-        });
+        $this->middleware('super-admin');
     }
 
     public function index()
     {
-        $empresas = Empresa::paginate(10);
-        return view('admin.empresas.index', compact('empresas'));
+        $empresas = Empresa::withCount(['quadras', 'admins'])->paginate(10);
+        return view('super-admin.empresas.index', compact('empresas'));
     }
 
     public function create()
     {
-        return view('admin.empresas.create');
+        return view('super-admin.empresas.create');
     }
 
     public function store(Request $request)
@@ -49,18 +45,22 @@ class EmpresaController extends Controller
 
         Empresa::create($data);
 
-        return redirect()->route('empresas.index')->with('success', 'Empresa criada com sucesso!');
+        return redirect()->route('super-admin.empresas.index')->with('success', 'Empresa criada com sucesso!');
     }
 
     public function show(Empresa $empresa)
     {
-        $empresa->loadCount(['quadras', 'reservas']);
-        return view('admin.empresas.show', compact('empresa'));
+        $empresa->loadCount(['quadras', 'reservas', 'admins']);
+        $empresa->load(['quadras' => function($query) {
+            $query->latest()->take(5);
+        }]);
+
+        return view('super-admin.empresas.show', compact('empresa'));
     }
 
     public function edit(Empresa $empresa)
     {
-        return view('admin.empresas.edit', compact('empresa'));
+        return view('super-admin.empresas.edit', compact('empresa'));
     }
 
     public function update(Request $request, Empresa $empresa)
@@ -85,7 +85,7 @@ class EmpresaController extends Controller
 
         $empresa->update($data);
 
-        return redirect()->route('empresas.index')->with('success', 'Empresa atualizada com sucesso!');
+        return redirect()->route('super-admin.empresas.index')->with('success', 'Empresa atualizada com sucesso!');
     }
 
     public function destroy(Empresa $empresa)
@@ -95,7 +95,7 @@ class EmpresaController extends Controller
         }
         $empresa->delete();
 
-        return redirect()->route('empresas.index')->with('success', 'Empresa excluída com sucesso!');
+        return redirect()->route('super-admin.empresas.index')->with('success', 'Empresa excluída com sucesso!');
     }
 
     public function toggleStatus(Empresa $empresa)
@@ -103,6 +103,19 @@ class EmpresaController extends Controller
         $empresa->update(['ativa' => !$empresa->ativa]);
         
         $status = $empresa->ativa ? 'ativada' : 'desativada';
-        return redirect()->route('empresas.index')->with('success', "Empresa {$status} com sucesso!");
+        return redirect()->route('super-admin.empresas.index')->with('success', "Empresa {$status} com sucesso!");
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        $empresas = Empresa::where('nome', 'like', "%{$search}%")
+            ->orWhere('cnpj', 'like', "%{$search}%")
+            ->orWhere('email', 'like', "%{$search}%")
+            ->orWhere('responsavel', 'like', "%{$search}%")
+            ->withCount(['quadras', 'admins'])
+            ->paginate(10);
+
+        return view('super-admin.empresas.index', compact('empresas'));
     }
 }

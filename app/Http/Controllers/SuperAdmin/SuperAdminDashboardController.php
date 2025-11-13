@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\SuperAdmin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Reserva;
 use App\Models\Cliente;
 use App\Models\Quadra;
@@ -13,12 +14,7 @@ class SuperAdminDashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (!auth()->check() || !auth()->user()->isSuperAdmin()) {
-                abort(403, 'Acesso não autorizado. Apenas Super Administradores podem acessar esta área.');
-            }
-            return $next($request);
-        });
+        $this->middleware('super-admin');
     }
 
     public function index()

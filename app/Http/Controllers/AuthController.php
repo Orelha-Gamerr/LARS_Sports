@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Cliente;
+use App\Models\Admin;
+use App\Models\SuperAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class AuthController extends Controller
 {
@@ -26,7 +29,9 @@ class AuthController extends Controller
             $request->session()->regenerate();
             
             $user = Auth::user();
-            if ($user->isAdmin()) {
+            if ($user->isSuperAdmin()) {
+                return redirect()->route('super-admin.dashboard');
+            } elseif ($user->isAdminEmpresa()) {
                 return redirect()->route('admin.dashboard');
             } else {
                 return redirect()->route('cliente.dashboard');
@@ -83,6 +88,7 @@ class AuthController extends Controller
                 'empresa_id' => $request->empresa_id,
             ]);
         } elseif ($request->tipo === 'superadmin') {
+            // Apenas super admins existentes podem criar novos super admins
             if (!auth()->check() || !auth()->user()->isSuperAdmin()) {
                 abort(403, 'Apenas super administradores podem criar novos super administradores.');
             }

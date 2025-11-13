@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Reserva;
 use App\Models\Cliente;
 use App\Models\Quadra;
@@ -12,12 +13,7 @@ class AdminDashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (!auth()->check() || !auth()->user()->isAdminEmpresa()) {
-                abort(403, 'Acesso não autorizado. Apenas administradores de empresa podem acessar esta área.');
-            }
-            return $next($request);
-        });
+        $this->middleware('admin');
     }
 
     public function index()
@@ -65,5 +61,23 @@ class AdminDashboardController extends Controller
             'faturamentoMensal',
             'empresa'
         ));
+    }
+
+    public function relatorios()
+    {
+        $user = auth()->user();
+        $empresa = $user->admin->empresa;
+        
+        // Lógica específica para relatórios do admin
+        return view('admin.relatorios.index', compact('empresa'));
+    }
+
+    public function relatorioFinanceiro()
+    {
+        $user = auth()->user();
+        $empresa = $user->admin->empresa;
+        
+        // Lógica específica para relatório financeiro
+        return view('admin.relatorios.financeiro', compact('empresa'));
     }
 }

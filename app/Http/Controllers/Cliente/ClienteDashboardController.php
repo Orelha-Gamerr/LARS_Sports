@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Cliente;
 
+use App\Http\Controllers\Controller;
 use App\Models\Reserva;
 use App\Models\Quadra;
 use Illuminate\Http\Request;
@@ -11,13 +12,7 @@ class ClienteDashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        
-        $this->middleware(function ($request, $next) {
-            if (!auth()->check() || !auth()->user()->isCliente()) {
-                abort(403, 'Acesso não autorizado. Apenas clientes podem acessar esta área.');
-            }
-            return $next($request);
-        });
+        $this->middleware('cliente');
     }
 
     public function index()
