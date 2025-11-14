@@ -6,7 +6,6 @@
 
 <div class="p-6">
 
-    {{-- Cabeçalho --}}
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-semibold">Detalhes da Quadra</h1>
 
@@ -16,8 +15,18 @@
         </a>
     </div>
 
-    {{-- Conteúdo --}}
     <div class="bg-white shadow rounded p-6">
+
+        <div class="mb-6">
+            <h2 class="font-semibold text-lg text-gray-700 mb-2">Imagem da Quadra</h2>
+
+            @if($quadra->imagem)
+                <img src="{{ asset('storage/' . $quadra->imagem) }}"
+                     class="w-full max-w-xl rounded shadow border object-cover">
+            @else
+                <p class="text-gray-500 italic">Nenhuma imagem cadastrada.</p>
+            @endif
+        </div>
 
         <div class="mb-4">
             <h2 class="font-semibold text-lg text-gray-700">Nome</h2>

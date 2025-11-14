@@ -36,7 +36,7 @@ class QuadraController extends AdminBaseController
             'preco_hora' => 'required|numeric|min:0',
             'capacidade' => 'required|integer|min:1',
             'disponivel' => 'boolean',
-            'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120'
         ]);
 
         $data['empresa_id'] = $empresa->id;
@@ -85,7 +85,7 @@ class QuadraController extends AdminBaseController
             'preco_hora' => 'required|numeric|min:0',
             'capacidade' => 'required|integer|min:1',
             'disponivel' => 'boolean',
-            'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120'
         ]);
 
         if ($request->hasFile('imagem')) {

@@ -6,11 +6,8 @@
 
 <div class="p-6">
 
-    {{-- Cabeçalho --}}
     <div class="flex justify-between items-center mb-6">
-        <div>
-            <h1 class="text-2xl font-semibold">Quadras</h1>
-        </div>
+        <h1 class="text-2xl font-semibold">Quadras</h1>
 
         <a href="{{ route('admin.quadras.create') }}"
            class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 flex items-center gap-2">
@@ -18,24 +15,11 @@
         </a>
     </div>
 
-    {{-- Busca --}}
-    <form action="{{ route('admin.quadras.search') }}" method="POST" class="mb-6">
-        @csrf
-        <div class="flex items-center gap-3">
-            <input type="text" name="search" placeholder="Buscar quadra..."
-                   class="w-72 px-3 py-2 border border-gray-300 rounded focus:ring focus:ring-blue-200">
-
-            <button class="px-4 py-2 bg-gray-700 text-white rounded-lg shadow hover:bg-gray-800 flex items-center gap-2">
-                <i class="fas fa-search"></i> Buscar
-            </button>
-        </div>
-    </form>
-
-    {{-- Tabela --}}
     <div class="overflow-x-auto bg-white shadow rounded-lg">
         <table class="w-full border-collapse text-left">
             <thead class="bg-gray-100 border-b">
                 <tr>
+                    <th class="px-4 py-3 font-medium text-gray-700 w-24">Imagem</th>
                     <th class="px-4 py-3 font-medium text-gray-700">Nome</th>
                     <th class="px-4 py-3 font-medium text-gray-700">Tipo</th>
                     <th class="px-4 py-3 font-medium text-gray-700">Status</th>
@@ -46,6 +30,16 @@
             <tbody>
                 @foreach ($quadras as $quadra)
                     <tr class="border-b hover:bg-gray-50 transition">
+
+                        <td class="px-4 py-3">
+                            @if($quadra->imagem)
+                                <img src="{{ asset('storage/' . $quadra->imagem) }}"
+                                     class="w-16 h-12 object-cover rounded border">
+                            @else
+                                <span class="text-gray-400 text-sm">Sem imagem</span>
+                            @endif
+                        </td>
+
                         <td class="px-4 py-3">{{ $quadra->nome }}</td>
                         <td class="px-4 py-3 capitalize">{{ $quadra->tipo }}</td>
 
@@ -89,7 +83,6 @@
         </table>
     </div>
 
-    {{-- Paginação --}}
     <div class="mt-6">
         {{ $quadras->links() }}
     </div>
