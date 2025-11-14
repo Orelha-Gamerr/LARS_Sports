@@ -4,9 +4,7 @@
 
 @section('content')
 
-{{-- HERO CONTATO --}}
 <section class="relative w-full min-h-[50vh] flex items-center bg-[#f47b2a] overflow-hidden">
-    {{-- Background Pattern --}}
     <div class="absolute inset-0 opacity-10"
          style="background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/dot-grid.png'); 
                 background-size: 250px;">
@@ -25,11 +23,10 @@
     </div>
 </section>
 
-{{-- FORMULÁRIO DE CONTATO --}}
 <section class="py-20 bg-white">
     <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {{-- Informações de Contato --}}
+
             <div>
                 <h2 class="text-3xl font-extrabold text-gray-900 mb-6">
                     Entre em Contato
@@ -38,9 +35,8 @@
                     Tem alguma dúvida, sugestão ou quer cadastrar sua quadra? Preencha o formulário ao lado ou utilize um dos nossos canais de atendimento.
                 </p>
 
-                {{-- Canais de Atendimento --}}
                 <div class="space-y-6">
-                    {{-- Atendimento Geral --}}
+
                     <div class="bg-gray-50 rounded-2xl p-6">
                         <h3 class="font-bold text-xl text-[#4486f3] mb-4">Atendimento Geral</h3>
                         <div class="space-y-3">
@@ -65,7 +61,6 @@
                         </div>
                     </div>
 
-                    {{-- Para Empresas --}}
                     <div class="bg-gray-50 rounded-2xl p-6">
                         <h3 class="font-bold text-xl text-[#f47b2a] mb-4">Para Empresas</h3>
                         <div class="space-y-3">
@@ -91,7 +86,6 @@
                     </div>
                 </div>
 
-                {{-- Redes Sociais --}}
                 <div class="mt-8">
                     <h3 class="font-bold text-lg mb-4">Siga-nos</h3>
                     <div class="flex space-x-4">
@@ -108,12 +102,11 @@
                 </div>
             </div>
 
-            {{-- Formulário --}}
             <div class="bg-gray-50 rounded-2xl p-8">
                 <h3 class="text-2xl font-bold text-gray-900 mb-6">Envie sua Mensagem</h3>
                 
                 <form class="space-y-6">
-                    {{-- Nome --}}
+
                     <div>
                         <label for="nome" class="block text-sm font-medium text-gray-700 mb-2">Nome Completo</label>
                         <input 
@@ -124,7 +117,6 @@
                         >
                     </div>
 
-                    {{-- Email --}}
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-mail</label>
                         <input 
@@ -135,7 +127,6 @@
                         >
                     </div>
 
-                    {{-- Tipo de Contato --}}
                     <div>
                         <label for="tipo" class="block text-sm font-medium text-gray-700 mb-2">Assunto</label>
                         <select 
@@ -152,7 +143,6 @@
                         </select>
                     </div>
 
-                    {{-- Mensagem --}}
                     <div>
                         <label for="mensagem" class="block text-sm font-medium text-gray-700 mb-2">Mensagem</label>
                         <textarea 
@@ -163,7 +153,6 @@
                         ></textarea>
                     </div>
 
-                    {{-- Botão Enviar --}}
                     <button 
                         type="submit"
                         class="w-full bg-[#f47b2a] text-white py-4 rounded-xl font-bold hover:bg-[#e06a20] transition-all"
@@ -176,7 +165,7 @@
     </div>
 </section>
 
-{{-- FAQ --}}
+
 <section class="py-20 bg-gray-50">
     <div class="container mx-auto px-6">
         <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-4">
@@ -187,7 +176,7 @@
         </p>
 
         <div class="max-w-4xl mx-auto space-y-4">
-            {{-- FAQ Item 1 --}}
+
             <div class="bg-white rounded-2xl shadow-sm faq-item">
                 <button class="faq-question flex justify-between items-center w-full text-left p-6">
                     <h3 class="font-bold text-lg text-gray-900">Como faço para reservar uma quadra?</h3>
@@ -200,7 +189,6 @@
                 </div>
             </div>
 
-            {{-- FAQ Item 2 --}}
             <div class="bg-white rounded-2xl shadow-sm faq-item">
                 <button class="faq-question flex justify-between items-center w-full text-left p-6">
                     <h3 class="font-bold text-lg text-gray-900">Quais formas de pagamento são aceitas?</h3>
@@ -213,7 +201,6 @@
                 </div>
             </div>
 
-            {{-- FAQ Item 3 --}}
             <div class="bg-white rounded-2xl shadow-sm faq-item">
                 <button class="faq-question flex justify-between items-center w-full text-left p-6">
                     <h3 class="font-bold text-lg text-gray-900">Como faço para cadastrar minha quadra na plataforma?</h3>
@@ -226,7 +213,6 @@
                 </div>
             </div>
 
-            {{-- FAQ Item 4 --}}
             <div class="bg-white rounded-2xl shadow-sm faq-item">
                 <button class="faq-question flex justify-between items-center w-full text-left p-6">
                     <h3 class="font-bold text-lg text-gray-900">Posso cancelar ou remarcar minha reserva?</h3>
@@ -242,7 +228,7 @@
     </div>
 </section>
 
-{{-- HORÁRIO DE ATENDIMENTO --}}
+
 <section class="py-20 bg-white">
     <div class="container mx-auto px-6">
         <div class="max-w-4xl mx-auto text-center">
@@ -272,7 +258,7 @@
     </div>
 </section>
 
-{{-- CTA FINAL --}}
+
 <section class="py-20 bg-[#27b65c]">
     <div class="container mx-auto px-6 text-center">
         <h2 class="text-4xl font-extrabold text-white mb-6">
@@ -294,7 +280,6 @@
     </div>
 </section>
 
-{{-- JavaScript para o FAQ --}}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const faqItems = document.querySelectorAll('.faq-item');
@@ -305,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const icon = question.querySelector('i');
         
         question.addEventListener('click', () => {
-            // Fecha todos os outros itens
+
             faqItems.forEach(otherItem => {
                 if (otherItem !== item) {
                     const otherAnswer = otherItem.querySelector('.faq-answer');
@@ -315,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            // Alterna o item atual
+
             const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
             
             if (isOpen) {

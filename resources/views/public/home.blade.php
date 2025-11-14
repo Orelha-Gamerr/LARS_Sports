@@ -55,7 +55,6 @@
     </div>
 </section>
 
-{{-- SESSÃO ESPORTES --}}
 <section class="py-20 bg-white">
     <div class="container mx-auto px-6">
         <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-4">
@@ -66,7 +65,7 @@
         </p>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            {{-- Vôlei de Praia --}}
+
             <div class="text-center group cursor-pointer">
                 <div class="w-20 h-20 bg-[#4486f3] rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
                     <span class="text-white font-bold text-xs">VÔLEI PRAIA</span>
@@ -74,7 +73,6 @@
                 <h3 class="font-semibold text-gray-800">Vôlei de Praia</h3>
             </div>
 
-            {{-- Futevôlei --}}
             <div class="text-center group cursor-pointer">
                 <div class="w-20 h-20 bg-[#f47b2a] rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
                     <span class="text-white font-bold text-xs">FUTEVÔLEI</span>
@@ -82,7 +80,6 @@
                 <h3 class="font-semibold text-gray-800">Futevôlei</h3>
             </div>
 
-            {{-- Beach Tennis --}}
             <div class="text-center group cursor-pointer">
                 <div class="w-20 h-20 bg-[#27b65c] rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
                     <span class="text-white font-bold text-xs">BEACH TENNIS</span>
@@ -90,7 +87,6 @@
                 <h3 class="font-semibold text-gray-800">Beach Tennis</h3>
             </div>
 
-            {{-- Frescobol --}}
             <div class="text-center group cursor-pointer">
                 <div class="w-20 h-20 bg-[#4486f3] rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
                     <span class="text-white font-bold text-xs">FRESCOBOL</span>
