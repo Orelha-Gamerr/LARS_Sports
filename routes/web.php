@@ -16,6 +16,7 @@ use App\Http\Controllers\Cliente\ClienteDashboardController;
 use App\Http\Controllers\Cliente\ReservaController as ClienteReservaController;
 use App\Http\Controllers\Cliente\PagamentoController as ClientePagamentoController;
 use App\Http\Controllers\Cliente\PerfilController as ClientePerfilController;
+use App\Http\Controllers\Cliente\ClienteQuadraController;
 
 use App\Http\Controllers\SuperAdmin\SuperAdminDashboardController;
 use App\Http\Controllers\SuperAdmin\EmpresaController;
@@ -143,6 +144,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit', [ClientePerfilController::class, 'edit'])->name('edit');
             Route::put('/update', [ClientePerfilController::class, 'update'])->name('update');
         });
+
+        Route::prefix('quadras')->name('quadras.')->group(function () {
+        Route::get('/', [ClienteQuadraController::class, 'index'])->name('index');
+        Route::get('/{quadra}', [ClienteQuadraController::class, 'show'])->name('show');
+        Route::post('/search', [ClienteQuadraController::class, 'search'])->name('search');
+    });
 
         // Reservas do cliente
         Route::prefix('reservas')->name('reservas.')->group(function () {
