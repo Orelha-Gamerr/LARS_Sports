@@ -95,8 +95,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('quadras', AdminQuadraController::class);
 
 
+        Route::get('/horarios/search', [AdminHorarioController::class, 'search'])->name('horarios.search');
         Route::resource('horarios', AdminHorarioController::class);
-        Route::post('/horarios/search', [AdminHorarioController::class, 'search'])->name('horarios.search');
+
 
 
         Route::get('/reservas/search', [AdminReservaController::class, 'search'])->name('reservas.search');

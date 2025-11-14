@@ -17,8 +17,7 @@
         </a>
     </div>
 
-    <form action="{{ route('admin.horarios.search') }}" method="POST" class="mb-6">
-        @csrf
+    <form action="{{ route('admin.horarios.search') }}" method="GET" class="mb-6">
         <div class="flex flex-wrap items-center gap-3">
 
             <input type="text" name="quadra"

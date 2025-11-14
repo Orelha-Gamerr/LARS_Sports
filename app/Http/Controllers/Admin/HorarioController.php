@@ -128,25 +128,27 @@ class HorarioController extends AdminBaseController
         $disponivel = $request->disponivel;
 
         $horarios = Horario::whereHas('quadra', function ($query) use ($empresa, $quadra) {
-            $query->where('empresa_id', $empresa->id);
+                $query->where('empresa_id', $empresa->id);
 
-            if (!empty($quadra)) {
-                $query->where('nome', 'like', "%{$quadra}%");
-            }
-        })
-        ->when($horario_inicio, function ($q) use ($horario_inicio) {
-            $q->where('horario_inicio', '>=', $horario_inicio);
-        })
-        ->when($horario_fim, function ($q) use ($horario_fim) {
-            $q->where('horario_fim', '<=', $horario_fim);
-        })
-        ->when($disponivel !== null && $disponivel !== "", function ($q) use ($disponivel) {
-            $q->where('disponivel', $disponivel);
-        })
-        ->with('quadra')
-        ->paginate(10);
+                if (!empty($quadra)) {
+                    $query->where('nome', 'like', "%{$quadra}%");
+                }
+            })
+            ->when($horario_inicio, function ($q) use ($horario_inicio) {
+                $q->where('horario_inicio', '>=', $horario_inicio);
+            })
+            ->when($horario_fim, function ($q) use ($horario_fim) {
+                $q->where('horario_fim', '<=', $horario_fim);
+            })
+            ->when($disponivel !== null && $disponivel !== "", function ($q) use ($disponivel) {
+                $q->where('disponivel', $disponivel);
+            })
+            ->with('quadra')
+            ->paginate(10)
+            ->appends($request->query());
 
         return view('admin.horarios.index', compact('horarios'));
     }
+
 }
 
