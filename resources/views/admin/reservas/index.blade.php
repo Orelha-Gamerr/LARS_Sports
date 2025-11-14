@@ -18,6 +18,23 @@
         </a>
     </div>
 
+    {{-- 🔍 SEARCHBAR --}}
+    <form method="GET" action="{{ route('admin.reservas.search') }}" class="mb-6">
+        <div class="flex gap-3">
+            <input 
+                type="text" 
+                name="search" 
+                value="{{ request('search') }}"
+                placeholder="Buscar por cliente ou quadra..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+            >
+
+            <button class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </form>
+
     @if($reservas->count() > 0)
 
         <div class="overflow-x-auto">
@@ -41,7 +58,7 @@
 
                         <td class="px-4 py-3">{{ $reserva->quadra->nome ?? '—' }}</td>
 
-                        <td class="px-4 py-3">{{ $reserva->cliente->nome ?? '—' }}</td>
+                        <td class="px-4 py-3">{{ $reserva->cliente->user->name ?? '—' }}</td>
 
                         <td class="px-4 py-3">
                             {{ \Carbon\Carbon::parse($reserva->data_reserva)->format('d/m/Y') }}
@@ -99,7 +116,7 @@
         </div>
 
         <div class="mt-6">
-            {{ $reservas->links() }}
+            {{ $reservas->appends(request()->query())->links() }}
         </div>
 
     @else

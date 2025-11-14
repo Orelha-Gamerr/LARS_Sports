@@ -91,19 +91,22 @@ Route::middleware(['auth'])->group(function () {
             
         });
 
+        Route::get('/quadras/search', [AdminQuadraController::class, 'search'])->name('quadras.search');
         Route::resource('quadras', AdminQuadraController::class);
-        Route::post('/quadras/search', [AdminQuadraController::class, 'search'])->name('quadras.search');
 
 
         Route::resource('horarios', AdminHorarioController::class);
         Route::post('/horarios/search', [AdminHorarioController::class, 'search'])->name('horarios.search');
 
+
+        Route::get('/reservas/search', [AdminReservaController::class, 'search'])->name('reservas.search');
         Route::resource('reservas', AdminReservaController::class);
-        Route::post('/reservas/search', [AdminReservaController::class, 'search'])->name('reservas.search');
+
 
         Route::resource('pagamentos', AdminPagamentoController::class);
         Route::post('/pagamentos/search', [AdminPagamentoController::class, 'search'])->name('pagamentos.search');
         Route::get('/pagamentos/{pagamento}/pdf', [AdminPagamentoController::class, 'pdfIndividual'])->name('pagamentos.pdf.individual');
+
 
         Route::resource('cancelamentos', AdminCancelamentoController::class);
         Route::post('/cancelamentos/search', [AdminCancelamentoController::class, 'search'])->name('cancelamentos.search');

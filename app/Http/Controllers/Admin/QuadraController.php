@@ -121,13 +121,16 @@ class QuadraController extends AdminBaseController
         $empresa = $user->admin->empresa;
 
         $search = $request->get('search');
+
         $quadras = Quadra::where('empresa_id', $empresa->id)
             ->where(function($query) use ($search) {
                 $query->where('nome', 'like', "%{$search}%")
-                      ->orWhere('tipo', 'like', "%{$search}%");
+                    ->orWhere('tipo', 'like', "%{$search}%");
             })
-            ->paginate(10);
+            ->paginate(10)
+            ->appends(['search' => $search]); // 🔥 Mantém a busca na paginação
 
         return view('admin.quadras.index', compact('quadras'));
     }
+
 }

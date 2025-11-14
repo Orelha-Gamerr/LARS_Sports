@@ -131,15 +131,15 @@ class ReservaController extends AdminBaseController
         $search = $request->get('search');
 
         $reservas = Reserva::whereHas('quadra', function($q) use ($empresa) {
-            $q->where('empresa_id', $empresa->id);
-        })
-        ->where(function($q) use ($search) {
-            $q->whereHas('cliente.user', fn($u) => $u->where('name', 'like', "%{$search}%"))
-              ->orWhereHas('quadra', fn($quadra) => $quadra->where('nome', 'like', "%{$search}%"));
-        })
-        ->with(['cliente.user', 'quadra', 'horario'])
-        ->orderBy('data_reserva', 'desc')
-        ->paginate(10);
+                $q->where('empresa_id', $empresa->id);
+            })
+            ->where(function($q) use ($search) {
+                $q->whereHas('cliente.user', fn($u) => $u->where('name', 'like', "%{$search}%"))
+                  ->orWhereHas('quadra', fn($quadra) => $quadra->where('nome', 'like', "%{$search}%"));
+            })
+            ->with(['cliente.user', 'quadra', 'horario'])
+            ->orderBy('data_reserva', 'desc')
+            ->paginate(10);
 
         return view('admin.reservas.index', compact('reservas'));
     }

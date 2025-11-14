@@ -14,6 +14,27 @@
             <i class="fas fa-plus"></i> Nova Quadra
         </a>
     </div>
+    <form action="{{ route('admin.quadras.search') }}" method="GET" class="mb-6">
+        <div class="flex items-center gap-3">
+            <input
+                type="text"
+                name="search"
+                value="{{ request('search') }}"
+                placeholder="Buscar por nome ou tipo..."
+                class="w-64 px-4 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300"
+            >
+
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+                <i class="fas fa-search mr-1"></i> Buscar
+            </button>
+
+            @if(request('search'))
+                <a href="{{ route('admin.quadras.index') }}" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400">
+                    Limpar
+                </a>
+            @endif
+        </div>
+    </form>
 
     <div class="overflow-x-auto bg-white shadow rounded-lg">
         <table class="w-full border-collapse text-left">
