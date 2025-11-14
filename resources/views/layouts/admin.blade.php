@@ -36,7 +36,6 @@
                     </a>
                 @endif
 
-
                 <a href="{{ route('admin.clientes.index') }}"
                     class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'clientes.') ? 'bg-blue-700 border-r-4 border-blue-300' : 'hover:bg-blue-700' }}">
                     <i class="fas fa-users w-6 text-center mr-3"></i>
@@ -66,12 +65,19 @@
                     <i class="fas fa-money-bill-wave w-6 text-center mr-3"></i>
                     <span>Pagamentos</span>
                 </a>
+
+                {{-- ✅ CANCELAMENTOS ADICIONADO AQUI --}}
+                <a href="{{ route('admin.cancelamentos.index') }}"
+                    class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'cancelamentos.') ? 'bg-blue-700 border-r-4 border-blue-300' : 'hover:bg-blue-700' }}">
+                    <i class="fas fa-ban w-6 text-center mr-3"></i>
+                    <span>Cancelamentos</span>
+                </a>
+                {{-- FIM DO BLOCO NOVO --}}
             </nav>
 
             <div class="absolute bottom-0 w-64 p-4 border-t border-blue-700">
                 <div class="text-center text-blue-300 text-sm">
                     <p>Reserve Quadras v1.0</p>
-                    
                 </div>
             </div>
         </div>
@@ -114,14 +120,14 @@
                             </button>
 
                             <div id="userDropdown"
-                                class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                                 class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                                 <div class="px-4 py-2 text-xs text-gray-500 border-b">
                                     Logado como <strong>{{ auth()->user()->email }}</strong>
                                 </div>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit"
-                                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                         <i class="fas fa-sign-out-alt mr-2"></i>Sair
                                     </button>
                                 </form>
@@ -152,7 +158,7 @@
                         </span>
                     </div>
                     <div class="text-sm text-gray-500">
-                        Desenvolvido com <i class="fas fa-heart text-red-500"></i> 
+                        Desenvolvido com <i class="fas fa-heart text-red-500"></i>
                     </div>
                 </div>
             </footer>

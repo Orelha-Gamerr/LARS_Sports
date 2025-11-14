@@ -28,7 +28,7 @@ use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\QuadraController as PublicQuadraController;
 
 // ===================================================
-// 🔓 ROTAS PÚBLICAS
+// ROTAS PÚBLICAS
 // ===================================================
 Route::get('/', function () {
     return redirect()->route('quadras.public');
@@ -44,7 +44,7 @@ Route::get('/quadras/{quadra}', [PublicQuadraController::class, 'publicShow'])->
 Route::post('/quadras/search', [PublicQuadraController::class, 'publicSearch'])->name('quadras.public.search');
 
 // ===================================================
-// 🔐 AUTENTICAÇÃO
+// AUTENTICAÇÃO
 // ===================================================
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLoginForm')->name('login');
@@ -55,14 +55,14 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 // ===================================================
-// 🔒 ROTAS PROTEGIDAS (usuário autenticado)
+// ROTAS PROTEGIDAS (usuário autenticado)
 // ===================================================
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
 
     // ===================================================
-    // 👑 ÁREA DO SUPER ADMIN
+    // ÁREA DO SUPER ADMIN
     // ===================================================
     Route::prefix('super-admin')->name('super-admin.')->group(function () {
         Route::get('/dashboard', [SuperAdminDashboardController::class, 'index'])->name('dashboard');
@@ -73,7 +73,6 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('empresas', EmpresaController::class);
         Route::post('/empresas/search', [EmpresaController::class, 'search'])->name('empresas.search');
 
-        // 🔥 ADICIONE ESTES SE QUISER TER ACESSO GERAL
         Route::resource('clientes', App\Http\Controllers\SuperAdmin\ClienteController::class);
         Route::resource('quadras', App\Http\Controllers\SuperAdmin\QuadraController::class);
         Route::resource('reservas', App\Http\Controllers\SuperAdmin\ReservaController::class);
@@ -81,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     // ===================================================
-    // 🏢 ÁREA DO ADMINISTRADOR DA EMPRESA
+    // ÁREA DO ADMINISTRADOR DA EMPRESA
     // ===================================================
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
@@ -110,6 +109,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('quadras', AdminQuadraController::class);
         Route::post('/quadras/search', [AdminQuadraController::class, 'search'])->name('quadras.search');
 
+
         // ===================================================
         // HORÁRIOS
         // ===================================================
@@ -119,9 +119,10 @@ Route::middleware(['auth'])->group(function () {
         // ===================================================
         // RESERVAS
         // ===================================================
-        // 🔥 ESTA É A ROTA QUE RESOLVE O ERRO "reservas.index not defined"
+
         Route::resource('reservas', AdminReservaController::class);
         Route::post('/reservas/search', [AdminReservaController::class, 'search'])->name('reservas.search');
+
 
         // ===================================================
         // PAGAMENTOS
@@ -137,7 +138,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // ===================================================
-    // 👤 ÁREA DO CLIENTE
+    // ÁREA DO CLIENTE
     // ===================================================
     Route::prefix('cliente')->name('cliente.')->group(function () {
         Route::get('/dashboard', [ClienteDashboardController::class, 'index'])->name('dashboard');

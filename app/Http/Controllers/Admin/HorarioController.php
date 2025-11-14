@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 
 class HorarioController extends AdminBaseController
 {
-
-
     public function index()
     {
         $user = auth()->user();
@@ -44,7 +42,6 @@ class HorarioController extends AdminBaseController
             'disponivel' => 'boolean'
         ]);
 
-        // Verificar se a quadra pertence à empresa
         $quadra = Quadra::findOrFail($data['quadra_id']);
         if ($quadra->empresa_id != $empresa->id) {
             abort(403, 'Quadra não pertence a esta empresa.');
@@ -96,7 +93,6 @@ class HorarioController extends AdminBaseController
             'disponivel' => 'boolean'
         ]);
 
-        // Verificar se a nova quadra pertence à empresa
         $quadra = Quadra::findOrFail($data['quadra_id']);
         if ($quadra->empresa_id != $empresa->id) {
             abort(403, 'Quadra não pertence a esta empresa.');
@@ -126,13 +122,31 @@ class HorarioController extends AdminBaseController
         $user = auth()->user();
         $empresa = $user->admin->empresa;
 
-        $search = $request->get('search');
-        $horarios = Horario::whereHas('quadra', function ($query) use ($empresa, $search) {
-            $query->where('empresa_id', $empresa->id)
-                  ->where('nome', 'like', "%{$search}%");
-        })->with('quadra')
-          ->paginate(10);
+        $quadra = $request->quadra;
+        $horario_inicio = $request->horario_inicio;
+        $horario_fim = $request->horario_fim;
+        $disponivel = $request->disponivel;
+
+        $horarios = Horario::whereHas('quadra', function ($query) use ($empresa, $quadra) {
+            $query->where('empresa_id', $empresa->id);
+
+            if (!empty($quadra)) {
+                $query->where('nome', 'like', "%{$quadra}%");
+            }
+        })
+        ->when($horario_inicio, function ($q) use ($horario_inicio) {
+            $q->where('horario_inicio', '>=', $horario_inicio);
+        })
+        ->when($horario_fim, function ($q) use ($horario_fim) {
+            $q->where('horario_fim', '<=', $horario_fim);
+        })
+        ->when($disponivel !== null && $disponivel !== "", function ($q) use ($disponivel) {
+            $q->where('disponivel', $disponivel);
+        })
+        ->with('quadra')
+        ->paginate(10);
 
         return view('admin.horarios.index', compact('horarios'));
     }
 }
+
