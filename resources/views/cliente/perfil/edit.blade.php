@@ -15,9 +15,32 @@
         </div>
         
         <div class="p-6">
-            <form action="{{ route('cliente.perfil.update') }}" method="POST">
+            <form action="{{ route('cliente.perfil.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+                
+                <!-- Foto -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Foto</label>
+                    <div class="flex items-center space-x-6">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+                            @if($cliente->foto)
+                                <img src="{{ asset('storage/' . $cliente->foto) }}" alt="Foto do perfil" class="w-full h-full object-cover">
+                            @else
+                                <i class="fas fa-user text-gray-400 text-3xl"></i>
+                            @endif
+                        </div>
+                        <div class="flex-1">
+                            <input type="file" name="foto" 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                   accept="image/*">
+                            <p class="text-xs text-gray-500 mt-1">PNG, JPG, GIF até 2MB</p>
+                            @error('foto')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -39,11 +62,40 @@
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Telefone</label>
-                        <input type="text" name="telefone" value="{{ old('telefone', auth()->user()->telefone) }}" 
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Telefone *</label>
+                        <input type="text" name="telefone" value="{{ old('telefone', $cliente->telefone) }}" 
                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                placeholder="(11) 99999-9999">
                         @error('telefone')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">CPF *</label>
+                        <input type="text" name="cpf" value="{{ old('cpf', $cliente->cpf) }}" 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                               placeholder="000.000.000-00">
+                        @error('cpf')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Data de Nascimento</label>
+                        <input type="date" name="data_nascimento" value="{{ old('data_nascimento', $cliente->data_nascimento ? $cliente->data_nascimento->format('Y-m-d') : '') }}" 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                        @error('data_nascimento')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Endereço</label>
+                        <input type="text" name="endereco" value="{{ old('endereco', $cliente->endereco) }}" 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                               placeholder="Seu endereço completo">
+                        @error('endereco')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>

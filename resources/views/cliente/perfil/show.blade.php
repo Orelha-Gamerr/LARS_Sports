@@ -15,6 +15,20 @@
         </div>
         
         <div class="p-6">
+            <!-- Foto -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Foto</label>
+                <div class="flex items-center space-x-4">
+                    <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+                        @if($cliente->foto)
+                            <img src="{{ asset('storage/' . $cliente->foto) }}" alt="Foto do perfil" class="w-full h-full object-cover">
+                        @else
+                            <i class="fas fa-user text-gray-400 text-3xl"></i>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo</label>
@@ -28,7 +42,24 @@
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Telefone</label>
-                    <p class="text-gray-900 font-semibold">{{ auth()->user()->telefone ?? 'Não informado' }}</p>
+                    <p class="text-gray-900 font-semibold">{{ $cliente->telefone ?? 'Não informado' }}</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">CPF</label>
+                    <p class="text-gray-900 font-semibold">{{ $cliente->cpf ?? 'Não informado' }}</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Data de Nascimento</label>
+                    <p class="text-gray-900 font-semibold">
+                        {{ $cliente->data_nascimento ? $cliente->data_nascimento->format('d/m/Y') : 'Não informada' }}
+                    </p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Endereço</label>
+                    <p class="text-gray-900 font-semibold">{{ $cliente->endereco ?? 'Não informado' }}</p>
                 </div>
                 
                 <div>

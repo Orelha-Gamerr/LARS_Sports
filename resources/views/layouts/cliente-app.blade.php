@@ -94,34 +94,48 @@
                         <i class="fas fa-money-bill-wave text-lg"></i>
                         <span class="text-xs mt-1">Pagamentos</span>
                     </a>
-                    <a href="{{ route('about') }}"
-                        class="flex flex-col items-center hover:text-green-200 transition">
+                    <a href="{{ route('about') }}" class="flex flex-col items-center hover:text-green-200 transition">
                         <i class="fas fa-building text-lg"></i>
                         <span class="text-xs mt-1">Sobre</span>
                     </a>
 
-                    <!-- User Menu -->
                     <div class="relative">
-                        <button id="userMenuButton" class="flex flex-col items-center hover:text-green-200 transition">
-                            <i class="fas fa-user text-lg"></i>
-                            <span class="text-xs mt-1">Conta</span>
+                        <button id="userMenuButton" class="flex items-center space-x-2 hover:text-green-200 transition">
+                            <div
+                                class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden">
+                                @if(auth()->user()->cliente->foto)
+                                    <img src="{{ asset('storage/' . auth()->user()->cliente->foto) }}" alt="Foto"
+                                        class="w-full h-full object-cover">
+                                @else
+                                    <i class="fas fa-user text-gray-600 text-sm"></i>
+                                @endif
+                            </div>
+                            <span class="text-sm font-medium hidden md:block">{{ auth()->user()->name }}</span>
                         </button>
 
                         <!-- Dropdown Menu -->
                         <div id="userDropdown"
                             class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
                             <div class="px-4 py-2 text-xs text-gray-500 border-b">
-                                Olá, <strong>{{ auth()->user()->name }}</strong>
-                            </div>
-                            <div class="px-4 py-2 text-xs text-gray-500 border-b">
-                                {{ auth()->user()->email }}
+                                <div class="flex items-center space-x-2">
+                                    <div
+                                        class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden">
+                                        @if(auth()->user()->cliente->foto)
+                                            <img src="{{ asset('storage/' . auth()->user()->cliente->foto) }}" alt="Foto"
+                                                class="w-full h-full object-cover">
+                                        @else
+                                            <i class="fas fa-user text-gray-600 text-sm"></i>
+                                        @endif
+                                    </div>
+                                    <div>
+                                        <strong>{{ auth()->user()->name }}</strong>
+                                        <div class="text-gray-400">{{ auth()->user()->email }}</div>
+                                    </div>
+                                </div>
                             </div>
                             <a href="{{ route('cliente.perfil.show') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 <i class="fas fa-user mr-2"></i>Meu Perfil
-                            </a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                <i class="fas fa-cog mr-2"></i>Configurações
                             </a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -141,7 +155,7 @@
         @yield('content')
     </main>
 
-      <!-- Footer -->
+    <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -154,17 +168,21 @@
                         A melhor plataforma para reserva de quadras esportivas do Brasil.
                     </p>
                 </div>
-                
+
                 <div>
                     <h4 class="font-bold mb-4">Links Rápidos</h4>
                     <ul class="space-y-2">
-                        <li><a href="{{ route('home.public') }}" class="text-gray-400 hover:text-white transition">Home</a></li>
-                        <li><a href="{{ route('quadras.public') }}" class="text-gray-400 hover:text-white transition">Quadras</a></li>
-                        <li><a href="{{ route('about') }}" class="text-gray-400 hover:text-white transition">Sobre</a></li>
-                        <li><a href="{{ route('contact') }}" class="text-gray-400 hover:text-white transition">Contato</a></li>
+                        <li><a href="{{ route('home.public') }}"
+                                class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="{{ route('quadras.public') }}"
+                                class="text-gray-400 hover:text-white transition">Quadras</a></li>
+                        <li><a href="{{ route('about') }}" class="text-gray-400 hover:text-white transition">Sobre</a>
+                        </li>
+                        <li><a href="{{ route('contact') }}"
+                                class="text-gray-400 hover:text-white transition">Contato</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h4 class="font-bold mb-4">Para Empresas</h4>
                     <ul class="space-y-2">
@@ -173,7 +191,7 @@
                         <li><a href="#" class="text-gray-400 hover:text-white transition">Planos</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h4 class="font-bold mb-4">Contato</h4>
                     <ul class="space-y-2 text-gray-400">
@@ -188,7 +206,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
                 <p>&copy; {{ date('Y') }} Reserve Quadras. Todos os direitos reservados.</p>
             </div>

@@ -66,6 +66,7 @@ class AuthController extends Controller
             'telefone' => 'required_if:tipo,cliente|string|max:20',
             'cpf' => 'required_if:tipo,cliente|string|max:14|unique:clientes,cpf',
             'empresa_id' => 'required_if:tipo,admin|exists:empresas,id',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         $user = User::create([
@@ -73,6 +74,11 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        
+         $fotoPath = null;
+        if ($request->hasFile('foto')) {
+            $fotoPath = $request->file('foto')->store('clientes', 'public');
+        }
 
         if ($request->tipo === 'cliente') {
             Cliente::create([
@@ -81,6 +87,7 @@ class AuthController extends Controller
                 'cpf' => $request->cpf,
                 'data_nascimento' => $request->data_nascimento,
                 'endereco' => $request->endereco,
+                'foto' => $fotoPath,
             ]);
         } elseif ($request->tipo === 'admin') {
             Admin::create([

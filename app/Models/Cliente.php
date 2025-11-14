@@ -14,7 +14,8 @@ class Cliente extends Model
         'telefone',
         'cpf',
         'data_nascimento',
-        'endereco'
+        'endereco',
+        'foto'
     ];
 
     protected $casts = [
@@ -41,5 +42,12 @@ class Cliente extends Model
     public function getEmailAttribute()
     {
         return $this->user->email;
+    }
+     public function getFotoUrlAttribute()
+    {
+        if ($this->foto) {
+            return asset('storage/' . $this->foto);
+        }
+        return asset('images/avatar-default.png');
     }
 }

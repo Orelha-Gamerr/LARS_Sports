@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('cpf')->unique();
             $table->date('data_nascimento')->nullable();
             $table->text('endereco')->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
             
             $table->index('user_id');
