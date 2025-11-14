@@ -96,6 +96,7 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/{cliente}', [AdminClienteController::class, 'update'])->name('update');
             Route::delete('/{cliente}', [AdminClienteController::class, 'destroy'])->name('destroy');
             Route::post('/search', [AdminClienteController::class, 'search'])->name('search');
+            
         });
 
         // ===================================================
@@ -145,6 +146,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [ClientePerfilController::class, 'show'])->name('show');
             Route::get('/edit', [ClientePerfilController::class, 'edit'])->name('edit');
             Route::put('/update', [ClientePerfilController::class, 'update'])->name('update');
+            Route::delete('/foto', [ClientePerfilController::class, 'deleteFoto'])->name('foto.delete'); 
         });
 
         Route::prefix('quadras')->name('quadras.')->group(function () {

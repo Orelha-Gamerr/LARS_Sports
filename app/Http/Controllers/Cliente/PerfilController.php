@@ -28,7 +28,8 @@ class PerfilController extends Controller
         $user = auth()->user();
         $cliente = $user->cliente;
 
-        $data = $request->validate([
+        // Validação
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'telefone' => 'required|string|max:20',
@@ -38,33 +39,43 @@ class PerfilController extends Controller
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Atualizar usuário
-        $user->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
-        ]);
+        try {
+            // Iniciar transação para garantir consistência
+            \DB::transaction(function () use ($user, $cliente, $validated, $request) {
+                // Atualizar usuário
+                $user->update([
+                    'name' => $validated['name'],
+                    'email' => $validated['email'],
+                ]);
 
-        // Upload da foto se fornecida
-        if ($request->hasFile('foto')) {
-            // Deletar foto antiga se existir
-            if ($cliente->foto && Storage::disk('public')->exists($cliente->foto)) {
-                Storage::disk('public')->delete($cliente->foto);
-            }
-            
-            $fotoPath = $request->file('foto')->store('clientes', 'public');
-            $data['foto'] = $fotoPath;
+                // Upload da foto se fornecida
+                $fotoPath = $cliente->foto; // Manter foto atual por padrão
+                
+                if ($request->hasFile('foto')) {
+                    // Deletar foto antiga se existir
+                    if ($cliente->foto && Storage::disk('public')->exists($cliente->foto)) {
+                        Storage::disk('public')->delete($cliente->foto);
+                    }
+                    
+                    $fotoPath = $request->file('foto')->store('clientes', 'public');
+                }
+
+                // Atualizar cliente
+                $cliente->update([
+                    'telefone' => $validated['telefone'],
+                    'cpf' => $validated['cpf'],
+                    'data_nascimento' => $validated['data_nascimento'],
+                    'endereco' => $validated['endereco'],
+                    'foto' => $fotoPath,
+                ]);
+            });
+
+            return redirect()->route('cliente.perfil.show')->with('success', 'Perfil atualizado com sucesso!');
+
+        } catch (\Exception $e) {
+            \Log::error('Erro ao atualizar perfil: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro ao atualizar perfil. Tente novamente.');
         }
-
-        // Atualizar cliente
-        $cliente->update([
-            'telefone' => $data['telefone'],
-            'cpf' => $data['cpf'],
-            'data_nascimento' => $data['data_nascimento'],
-            'endereco' => $data['endereco'],
-            'foto' => $data['foto'] ?? $cliente->foto, // Mantém a foto atual se não for enviada uma nova
-        ]);
-
-        return redirect()->route('cliente.perfil.show')->with('success', 'Perfil atualizado com sucesso!');
     }
 
     public function updatePassword(Request $request)
@@ -87,20 +98,16 @@ class PerfilController extends Controller
         return redirect()->route('cliente.perfil.show')->with('success', 'Senha alterada com sucesso!');
     }
 
-    public function deleteFoto()
+    public function deleteFoto(Request $request)
     {
         $cliente = auth()->user()->cliente;
 
         if ($cliente->foto && Storage::disk('public')->exists($cliente->foto)) {
             Storage::disk('public')->delete($cliente->foto);
-            
-            $cliente->update([
-                'foto' => null
-            ]);
-
-            return redirect()->route('cliente.perfil.edit')->with('success', 'Foto removida com sucesso!');
         }
 
-        return redirect()->route('cliente.perfil.edit')->with('error', 'Nenhuma foto para remover.');
+        $cliente->update(['foto' => null]);
+
+        return redirect()->route('cliente.perfil.edit')->with('success', 'Foto removida com sucesso!');
     }
 }
