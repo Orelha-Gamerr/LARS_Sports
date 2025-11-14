@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminBaseController;
 use App\Models\Pagamento;
 use App\Models\Reserva;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PagamentoController extends AdminBaseController
 {
@@ -126,6 +127,23 @@ class PagamentoController extends AdminBaseController
         $pagamento->delete();
 
         return redirect()->route('admin.pagamentos.index')->with('success', 'Pagamento excluído com sucesso!');
+    }
+
+    public function pdfIndividual(Pagamento $pagamento)
+    {
+        $user = auth()->user();
+        $empresa = $user->admin->empresa;
+
+        if ($pagamento->reserva->quadra->empresa_id != $empresa->id) {
+            abort(403, 'Acesso não autorizado.');
+        }
+
+        $pdf = Pdf::loadView('admin.pagamentos.pdf', [
+            'pagamento' => $pagamento,
+            'empresa' => $empresa
+        ]);
+
+        return $pdf->stream('pagamento-' . $pagamento->id . '.pdf');
     }
 
     public function search(Request $request)

@@ -85,27 +85,32 @@
                         <div class="flex items-center gap-4 text-lg">
 
                             <a href="{{ route('admin.pagamentos.show', $pagamento) }}"
-                               class="text-gray-600 hover:text-gray-900">
+                            class="text-gray-600 hover:text-gray-900">
                                 <i class="fas fa-eye"></i>
                             </a>
 
                             <a href="{{ route('admin.pagamentos.edit', $pagamento) }}"
-                               class="text-blue-600 hover:text-blue-800">
+                            class="text-blue-600 hover:text-blue-800">
                                 <i class="fas fa-edit"></i>
                             </a>
 
+                            <a href="{{ route('admin.pagamentos.pdf.individual', $pagamento) }}"
+                            class="text-red-600 hover:text-red-800">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+
                             <form action="{{ route('admin.pagamentos.destroy', $pagamento) }}"
-                                  method="POST"
-                                  onsubmit="return confirm('Excluir este pagamento?')"
-                                  class="inline">
+                                method="POST"
+                                onsubmit="return confirm('Excluir este pagamento?')"
+                                class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button class="text-red-600 hover:text-red-800">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
-
                         </div>
+
                     </td>
 
                 </tr>

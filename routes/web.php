@@ -124,6 +124,8 @@ Route::middleware(['auth'])->group(function () {
         // ===================================================
         Route::resource('pagamentos', AdminPagamentoController::class);
         Route::post('/pagamentos/search', [AdminPagamentoController::class, 'search'])->name('pagamentos.search');
+        Route::get('/pagamentos/{pagamento}/pdf', [AdminPagamentoController::class, 'pdfIndividual'])->name('pagamentos.pdf.individual');
+
 
         // ===================================================
         // CANCELAMENTOS
