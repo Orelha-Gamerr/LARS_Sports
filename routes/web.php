@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 
-// Controllers ADMIN
 use App\Http\Controllers\Admin\ClienteController as AdminClienteController;
 use App\Http\Controllers\Admin\QuadraController as AdminQuadraController;
 use App\Http\Controllers\Admin\HorarioController as AdminHorarioController;
@@ -13,26 +12,21 @@ use App\Http\Controllers\Admin\PagamentoController as AdminPagamentoController;
 use App\Http\Controllers\Admin\CancelamentoController as AdminCancelamentoController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 
-// Controllers CLIENTE
 use App\Http\Controllers\Cliente\ClienteDashboardController;
 use App\Http\Controllers\Cliente\ReservaController as ClienteReservaController;
 use App\Http\Controllers\Cliente\PagamentoController as ClientePagamentoController;
 use App\Http\Controllers\Cliente\PerfilController as ClientePerfilController;
 
-// Controllers SUPER ADMIN
 use App\Http\Controllers\SuperAdmin\SuperAdminDashboardController;
 use App\Http\Controllers\SuperAdmin\EmpresaController;
 
-// Controllers PÚBLICOS
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\QuadraController as PublicQuadraController;
 
 // ===================================================
 // ROTAS PÚBLICAS
 // ===================================================
-Route::get('/', function () {
-    return redirect()->route('quadras.public');
-});
+Route::get('/', [HomeController::class, 'home'])->name('home.public');
 
 Route::get('/sobre', [HomeController::class, 'about'])->name('about');
 Route::get('/contato', [HomeController::class, 'contact'])->name('contact');

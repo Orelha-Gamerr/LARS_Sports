@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    public function home()
+    {
+        return view('public.home');
+    }
     public function about()
     {
         return view('public.about');
