@@ -35,6 +35,7 @@
     @endif
 
     <!-- ========== HEADER ========== -->
+   <!-- ========== HEADER ========== -->
     <header class="gradient-header text-white shadow-lg">
         <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
@@ -64,11 +65,16 @@
                         <span class="text-xs mt-1">Contato</span>
                     </a>
 
-                    <!-- Botão de Ação Principal -->
-                    <a href="{{ route('home') }}#buscar"
-                       class="bg-white text-green-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition">
-                        Buscar Quadras
-                    </a>
+                    <!-- Botões de Login e Registro -->
+                    <div class="flex items-center space-x-4">
+                        <a href="{{ route('login') }}" class="text-sm hover:text-green-200 transition">
+                            <i class="fas fa-sign-in-alt mr-1"></i>Entrar
+                        </a>
+                        <a href="{{ route('register') }}" 
+                        class="bg-white text-green-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition">
+                            Cadastrar
+                        </a>
+                    </div>
                 </nav>
             </div>
         </div>

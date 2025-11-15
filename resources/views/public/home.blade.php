@@ -97,6 +97,173 @@
     </div>
 </section>
 
+{{-- SESSÃO GALERIA DE QUADRAS --}}
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-4">
+            Conheça Nossas Quadras
+        </h2>
+        <p class="text-gray-600 text-center text-lg mb-12 max-w-2xl mx-auto">
+            Espaços esportivos de qualidade disponíveis para reserva
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {{-- Quadra 1 - Vôlei de Areia --}}
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                <div class="h-48 bg-gray-300 relative overflow-hidden">
+                    <img src="{{ asset('quadras/quadraVoleiAreia.jpg') }}" 
+                         alt="Quadra de Vôlei de Areia" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 text-white">
+                        <h3 class="font-bold text-lg">Quadra de Vôlei de Areia</h3>
+                        <p class="text-sm">São Paulo - SP</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="mb-3">
+                        <span class="bg-[#27b65c] text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Vôlei de Areia
+                        </span>
+                    </div>
+                    <p class="text-gray-600 text-sm">
+                        Quadra profissional com areia especial e iluminação noturna. Perfeita para partidas em grupo.
+                    </p>
+                </div>
+            </div>
+
+            {{-- Quadra 2 - Futevôlei --}}
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                <div class="h-48 bg-gray-300 relative overflow-hidden">
+                    <img src="{{ asset('quadras/quadrafutvolei.jpg') }}" 
+                         alt="Quadra de Futevôlei" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 text-white">
+                        <h3 class="font-bold text-lg">Quadra de Futevôlei</h3>
+                        <p class="text-sm">Rio de Janeiro - RJ</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="mb-3">
+                        <span class="bg-[#f47b2a] text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Futevôlei
+                        </span>
+                    </div>
+                    <p class="text-gray-600 text-sm">
+                        Espaço amplo com rede profissional e área de descanso. Ideal para praticantes do esporte.
+                    </p>
+                </div>
+            </div>
+
+            {{-- Quadra 3 - Beach Tennis --}}
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                <div class="h-48 bg-gray-300 relative overflow-hidden">
+                    <img src="{{ asset('quadras/quadraBeachTennis.jpg') }}" 
+                         alt="Quadra de Beach Tennis" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 text-white">
+                        <h3 class="font-bold text-lg">Quadra de Beach Tennis</h3>
+                        <p class="text-sm">Florianópolis - SC</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="mb-3">
+                        <span class="bg-[#4486f3] text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Beach Tennis
+                        </span>
+                    </div>
+                    <p class="text-gray-600 text-sm">
+                        Quadra oficial com piso de saibro e equipamentos profissionais para prática do esporte.
+                    </p>
+                </div>
+            </div>
+
+            {{-- Quadra 4 - Frescobol --}}
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                <div class="h-48 bg-gray-300 relative overflow-hidden">
+                    <img src="{{ asset('quadras/quadraFrescobol.jpeg') }}" 
+                         alt="Quadra de Frescobol" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 text-white">
+                        <h3 class="font-bold text-lg">Quadra de Frescobol</h3>
+                        <p class="text-sm">Salvador - BA</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="mb-3">
+                        <span class="bg-[#27b65c] text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Frescobol
+                        </span>
+                    </div>
+                    <p class="text-gray-600 text-sm">
+                        Área exclusiva para frescobol à beira mar. Vista panorâmica e estrutura completa.
+                    </p>
+                </div>
+            </div>
+
+            {{-- Quadra 5 - Complexo Esportivo --}}
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                <div class="h-48 bg-gray-300 relative overflow-hidden">
+                    <img src="{{ asset('quadras/complexoEsportivo.jpeg') }}" 
+                         alt="Complexo Esportivo" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 text-white">
+                        <h3 class="font-bold text-lg">Complexo Esportivo</h3>
+                        <p class="text-sm">Chapecó - SC</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="mb-3">
+                        <span class="bg-[#f47b2a] text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Múltiplas Modalidades
+                        </span>
+                    </div>
+                    <p class="text-gray-600 text-sm">
+                        Complexo para diferentes esportes. Ambiente familiar e seguro.
+                    </p>
+                </div>
+            </div>
+
+            {{-- Quadra 6 - Arena Esportiva --}}
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                <div class="h-48 bg-gray-300 relative overflow-hidden">
+                    <img src="{{ asset('quadras/arenaEsportiva.jpeg') }}" 
+                         alt="Arena Esportiva" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4 text-white">
+                        <h3 class="font-bold text-lg">Arena Esportiva</h3>
+                        <p class="text-sm">Chapecó - SC</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="mb-3">
+                        <span class="bg-[#4486f3] text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            Vários Esportes
+                        </span>
+                    </div>
+                    <p class="text-gray-600 text-sm">
+                        Arena completa com quadras para diferentes modalidades e estrutura de primeira linha.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {{-- Botão para buscar quadras --}}
+        <div class="text-center mt-12">
+            <a href="{{ route('home') }}#buscar" 
+               class="inline-flex items-center px-8 py-4 bg-[#4486f3] text-white font-bold rounded-xl hover:bg-[#3a78e0] transition-all text-lg">
+                <i class="fas fa-search mr-3"></i>
+                Encontrar Quadras na Minha Cidade
+            </a>
+        </div>
+    </div>
+</section>
+
 {{-- SESSÃO COMO FUNCIONA --}}
 <section class="py-20 bg-gray-50">
     <div class="container mx-auto px-6">
@@ -223,7 +390,8 @@
             Junte-se a milhares de pessoas que já descobriram a melhor forma de reservar quadras esportivas.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <button class="px-8 py-4 bg-white text-[#4486f3] font-bold rounded-xl hover:bg-gray-100 transition-all text-lg">
+            <button href="{{ route('home') }}#buscar"
+            class="px-8 py-4 bg-white text-[#4486f3] font-bold rounded-xl hover:bg-gray-100 transition-all text-lg">
                 Buscar Quadras Agora
             </button>
             <button onclick="window.location.href='{{ route('about') }}'" 

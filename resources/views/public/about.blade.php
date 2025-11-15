@@ -110,7 +110,8 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <button class="px-6 py-3 bg-white text-[#27b65c] font-semibold rounded-xl hover:bg-gray-100 transition-all">
+                    <button href="{{ route('contact') }}"
+                        class="px-6 py-3 bg-white text-[#27b65c] font-semibold rounded-xl hover:bg-gray-100 transition-all">
                         Cadastrar Minha Quadra
                     </button>
                 <a href="{{ route('contact') }}" 
@@ -243,7 +244,8 @@
         </div>
 
         <div class="text-center mt-12">
-            <button class="px-8 py-4 bg-[#4486f3] text-white font-bold rounded-xl hover:bg-[#3a78e0] transition-all text-lg">
+            <button href="{{ route('contact') }}" 
+                class="px-8 py-4 bg-[#4486f3] text-white font-bold rounded-xl hover:bg-[#3a78e0] transition-all text-lg">
                 Quero Cadastrar Minha Quadra
             </button>
         </div>
