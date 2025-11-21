@@ -30,13 +30,8 @@ class EmpresaController extends SuperAdminBaseController
             'email' => 'required|email',
             'endereco' => 'required|string',
             'responsavel' => 'required|string|max:255',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'ativa' => 'boolean'
         ]);
-
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $request->file('logo')->store('empresas', 'public');
-        }
 
         Empresa::create($data);
 

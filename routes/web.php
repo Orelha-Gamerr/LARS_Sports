@@ -20,6 +20,9 @@ use App\Http\Controllers\Cliente\ClienteQuadraController;
 
 use App\Http\Controllers\SuperAdmin\SuperAdminDashboardController;
 use App\Http\Controllers\SuperAdmin\EmpresaController;
+use App\Http\Controllers\SuperAdmin\RelatorioController;
+use App\Http\Controllers\SuperAdmin\QuadraController;
+use App\Http\Controllers\SuperAdmin\ReservaController;
 
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\QuadraController as PublicQuadraController;
@@ -60,10 +63,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/relatorios', [SuperAdminDashboardController::class, 'relatorios'])->name('relatorios.index');
         Route::get('/relatorios/financeiro', [SuperAdminDashboardController::class, 'relatorioFinanceiro'])->name('relatorios.financeiro');
 
-        
-        Route::resource('empresas', EmpresaController::class);
         Route::post('/empresas/search', [EmpresaController::class, 'search'])->name('empresas.search');
-
+        Route::resource('empresas', EmpresaController::class);
+        
         Route::resource('clientes', App\Http\Controllers\SuperAdmin\ClienteController::class);
         Route::resource('quadras', App\Http\Controllers\SuperAdmin\QuadraController::class);
         Route::resource('reservas', App\Http\Controllers\SuperAdmin\ReservaController::class);
