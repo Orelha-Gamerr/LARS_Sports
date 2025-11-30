@@ -1,5 +1,4 @@
 @extends('layouts.admin')
-
 @section('page-title', 'Dashboard Administrativo')
 
 @section('admin-content')
@@ -13,7 +12,6 @@
     </div>
 </div>
 
-{{-- MÉTRICAS PRINCIPAIS --}}
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
@@ -65,7 +63,6 @@
     </div>
 </div>
 
-{{-- LINKS RÁPIDOS --}}
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
     <a href="{{ route('admin.reservas.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-blue-300">
         <div class="flex items-center space-x-3">
@@ -78,7 +75,7 @@
             </div>
         </div>
     </a>
-    
+
     <a href="{{ route('admin.clientes.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-green-300">
         <div class="flex items-center space-x-3">
             <div class="p-2 bg-green-100 rounded-lg">
@@ -90,7 +87,7 @@
             </div>
         </div>
     </a>
-    
+
     <a href="{{ route('admin.quadras.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-orange-300">
         <div class="flex items-center space-x-3">
             <div class="p-2 bg-orange-100 rounded-lg">
@@ -102,7 +99,7 @@
             </div>
         </div>
     </a>
-    
+
     <a href="{{ route('admin.relatorios.index') }}" class="bg-white p-4 rounded-lg shadow border border-gray-200 hover:shadow-md transition-all duration-300 hover:border-purple-300">
         <div class="flex items-center space-x-3">
             <div class="p-2 bg-purple-100 rounded-lg">
@@ -116,7 +113,6 @@
     </a>
 </div>
 
-{{-- INFORMAÇÕES DA EMPRESA --}}
 <div class="bg-white rounded-lg shadow mb-8">
     <div class="px-6 py-4 border-b border-gray-200">
         <h3 class="text-lg font-medium text-gray-900">Informações da Empresa</h3>
@@ -127,19 +123,17 @@
                 <h4 class="font-semibold text-gray-800 mb-2">{{ $empresa->nome }}</h4>
                 <div class="space-y-2 text-sm text-gray-600">
                     <p class="flex items-center">
-                        <i class="fas fa-envelope mr-2 text-blue-500"></i>
-                        {{ $empresa->email }}
+                        <i class="fas fa-envelope mr-2 text-blue-500"></i> {{ $empresa->email }}
                     </p>
                     <p class="flex items-center">
-                        <i class="fas fa-phone mr-2 text-green-500"></i>
-                        {{ $empresa->telefone ?? 'Não informado' }}
+                        <i class="fas fa-phone mr-2 text-green-500"></i> {{ $empresa->telefone ?? 'Não informado' }}
                     </p>
                     <p class="flex items-center">
-                        <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
-                        {{ $empresa->endereco ?? 'Endereço não informado' }}
+                        <i class="fas fa-map-marker-alt mr-2 text-red-500"></i> {{ $empresa->endereco ?? 'Endereço não informado' }}
                     </p>
                 </div>
             </div>
+
             <div>
                 <div class="flex items-center justify-between mb-4">
                     <span class="text-sm font-medium text-gray-600">Status da Empresa</span>
@@ -166,14 +160,34 @@
     </div>
 </div>
 
-{{-- RESERVAS RECENTES --}}
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium text-gray-900">Reservas (últimos 6 meses)</h3>
+            <p class="text-sm text-gray-500">Quantidade por mês</p>
+        </div>
+        <div>
+
+            {!! $reservasChart->container() !!}
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-medium text-gray-900">Faturamento (R$) - últimos 6 meses</h3>
+            <p class="text-sm text-gray-500">Reservas confirmadas</p>
+        </div>
+        <div>
+            {!! $faturamentoChart->container() !!}
+        </div>
+    </div>
+</div>
+
 <div class="bg-white rounded-lg shadow">
     <div class="px-6 py-4 border-b border-gray-200">
         <div class="flex justify-between items-center">
             <h3 class="text-lg font-medium text-gray-900">Reservas Recentes</h3>
-            <a href="{{ route('admin.reservas.index') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                Ver todas
-            </a>
+            <a href="{{ route('admin.reservas.index') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium"> Ver todas </a>
         </div>
     </div>
     <div class="p-6">
@@ -192,38 +206,38 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($reservasRecentes as $reserva)
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $reserva->cliente->user->name }}</div>
-                                <div class="text-sm text-gray-500">{{ $reserva->cliente->user->email }}</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $reserva->quadra->nome }}</div>
-                                <div class="text-sm text-gray-500 capitalize">{{ $reserva->quadra->tipo }}</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ \Carbon\Carbon::parse($reserva->data_reserva)->format('d/m/Y') }}</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $reserva->horario->horario_inicio }}</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-green-800">R$ {{ number_format($reserva->valor_total, 2, ',', '.') }}</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @php
-                                    $statusColors = [
-                                        'pendente' => 'bg-yellow-100 text-yellow-800',
-                                        'confirmado' => 'bg-green-100 text-green-800',
-                                        'cancelado' => 'bg-red-100 text-red-800',
-                                        'finalizado' => 'bg-blue-100 text-blue-800'
-                                    ];
-                                @endphp
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusColors[$reserva->status] ?? 'bg-gray-100 text-gray-800' }}">
-                                    {{ ucfirst($reserva->status) }}
-                                </span>
-                            </td>
-                        </tr>
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $reserva->cliente->user->name }}</div>
+                                    <div class="text-sm text-gray-500">{{ $reserva->cliente->user->email }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ $reserva->quadra->nome }}</div>
+                                    <div class="text-sm text-gray-500 capitalize">{{ $reserva->quadra->tipo }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ \Carbon\Carbon::parse($reserva->data_reserva)->format('d/m/Y') }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ $reserva->horario->horario_inicio }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-green-800">R$ {{ number_format($reserva->valor_total, 2, ',', '.') }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @php
+                                        $statusColors = [
+                                            'pendente' => 'bg-yellow-100 text-yellow-800',
+                                            'confirmado' => 'bg-green-100 text-green-800',
+                                            'cancelado' => 'bg-red-100 text-red-800',
+                                            'finalizado' => 'bg-blue-100 text-blue-800'
+                                        ];
+                                    @endphp
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusColors[$reserva->status] ?? 'bg-gray-100 text-gray-800' }}">
+                                        {{ ucfirst($reserva->status) }}
+                                    </span>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -237,4 +251,10 @@
         @endif
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+{!! $reservasChart->script() !!}
+{!! $faturamentoChart->script() !!}
+
 @endsection
