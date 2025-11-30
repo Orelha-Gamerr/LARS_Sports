@@ -103,6 +103,9 @@ Route::middleware(['auth'])->group(function () {
 
 
         Route::get('/reservas/search', [AdminReservaController::class, 'search'])->name('reservas.search');
+        // ADICIONE ESTA ROTA PARA A API DE HORÁRIOS - ANTES DO resource
+        Route::get('/reservas/horarios/{quadraId}', [AdminReservaController::class, 'getHorariosByQuadra'])
+            ->name('reservas.horarios');
         Route::resource('reservas', AdminReservaController::class);
 
 
@@ -129,13 +132,12 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::prefix('quadras')->name('quadras.')->group(function () {
-        Route::get('/', [ClienteQuadraController::class, 'index'])->name('index');
-        Route::get('/{quadra}', [ClienteQuadraController::class, 'show'])->name('show');
-        Route::post('/search', [ClienteQuadraController::class, 'search'])->name('search');
-    });
+            Route::get('/', [ClienteQuadraController::class, 'index'])->name('index');
+            Route::get('/{quadra}', [ClienteQuadraController::class, 'show'])->name('show');
+            Route::post('/search', [ClienteQuadraController::class, 'search'])->name('search');
+        });
 
-
-            Route::prefix('reservas')->name('reservas.')->group(function () {
+        Route::prefix('reservas')->name('reservas.')->group(function () {
             Route::get('/', [ClienteReservaController::class, 'index'])->name('index');
             Route::get('/create', [ClienteReservaController::class, 'create'])->name('create');
             Route::post('/', [ClienteReservaController::class, 'store'])->name('store');
@@ -143,6 +145,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{reserva}/edit', [ClienteReservaController::class, 'edit'])->name('edit');
             Route::put('/{reserva}', [ClienteReservaController::class, 'update'])->name('update');
             Route::delete('/{reserva}', [ClienteReservaController::class, 'destroy'])->name('destroy');
+
+            Route::get('/horarios/{quadraId}', [ClienteReservaController::class, 'getHorariosByQuadra'])
+                ->name('horarios.by-quadra');
         });
 
         Route::prefix('pagamentos')->name('pagamentos.')->group(function () {

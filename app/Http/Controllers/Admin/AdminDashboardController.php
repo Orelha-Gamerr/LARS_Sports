@@ -61,15 +61,18 @@ class AdminDashboardController extends AdminBaseController
         $reservasData = [];
         $faturamentoData = [];
 
-        for ($i = 5; $i >= 0; $i--) {
+        for ($i = 5; $i >= -1; $i--) {
+
             $start = Carbon::now()->subMonths($i)->startOfMonth();
-            $end = Carbon::now()->subMonths($i)->endOfMonth();
+            $end   = Carbon::now()->subMonths($i)->endOfMonth();
 
             $labels[] = $start->format('m/Y');
 
             $reservasCount = Reserva::whereHas('quadra', function ($query) use ($empresa) {
                 $query->where('empresa_id', $empresa->id);
-            })->whereBetween('created_at', [$start, $end])->count();
+            })
+            ->whereBetween('data_reserva', [$start, $end])
+            ->count();
 
             $faturamento = Pagamento::where('status', 'pago')
                 ->whereHas('reserva.quadra', function ($query) use ($empresa) {
@@ -81,6 +84,7 @@ class AdminDashboardController extends AdminBaseController
             $reservasData[] = (int) $reservasCount;
             $faturamentoData[] = round((float) $faturamento, 2);
         }
+
 
         $reservasChart = $chart->lineChart()
             ->setLabels($labels)

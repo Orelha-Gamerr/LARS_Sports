@@ -13,7 +13,7 @@ class Reserva extends Model
         'cliente_id',
         'quadra_id',
         'horario_id',
-        'data_reserva',
+        'data_reserva', 
         'status',
         'valor_total',
         'observacoes'
