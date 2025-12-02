@@ -20,9 +20,10 @@ use App\Http\Controllers\Cliente\ClienteQuadraController;
 
 use App\Http\Controllers\SuperAdmin\SuperAdminDashboardController;
 use App\Http\Controllers\SuperAdmin\EmpresaController;
+use App\Http\Controllers\SuperAdmin\ClienteController as SuperAdminClienteController;
 use App\Http\Controllers\SuperAdmin\RelatorioController;
-use App\Http\Controllers\SuperAdmin\QuadraController;
-use App\Http\Controllers\SuperAdmin\ReservaController;
+use App\Http\Controllers\SuperAdmin\QuadraController as SuperAdminQuadraController;
+use App\Http\Controllers\SuperAdmin\ReservaController as SuperAdminReservaController;
 
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\QuadraController as PublicQuadraController;
@@ -66,9 +67,12 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/empresas/search', [EmpresaController::class, 'search'])->name('empresas.search');
         Route::resource('empresas', EmpresaController::class);
         
-        Route::resource('clientes', App\Http\Controllers\SuperAdmin\ClienteController::class);
-        Route::resource('quadras', App\Http\Controllers\SuperAdmin\QuadraController::class);
-        Route::resource('reservas', App\Http\Controllers\SuperAdmin\ReservaController::class);
+        Route::post('/clientes/search', [SuperAdminClienteController::class, 'search'])->name('clientes.search');
+        Route::post('/quadras/search', [SuperAdminQuadraController::class, 'search'])->name('quadras.search');
+        Route::post('/reservas/search', [SuperAdminReservaController::class, 'search'])->name('reservas.search');
+        Route::resource('clientes', SuperAdminClienteController::class);
+        Route::resource('quadras', SuperAdminQuadraController::class);
+        Route::resource('reservas', SuperAdminReservaController::class);
     });
 
 
