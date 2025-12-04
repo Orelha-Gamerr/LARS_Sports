@@ -88,7 +88,7 @@ class ReservaController extends SuperAdminBaseController
      */
     public function show(Reserva $reserva)
     {
-        $reserva->load(['cliente.user', 'quadra.empresa', 'horario', 'pagamentos']);
+        $reserva->load(['cliente.user', 'quadra.empresa', 'horario', 'pagamento']);
         return view('super-admin.reservas.show', compact('reserva'));
     }
 
@@ -97,7 +97,7 @@ class ReservaController extends SuperAdminBaseController
      */
     public function edit(Reserva $reserva)
     {
-        $reserva->load(['cliente.user', 'quadra', 'horario']);
+        $reserva->load(['cliente.user', 'quadra.empresa', 'horario', 'pagamento']);
         $clientes = Cliente::with('user')->get();
         $quadras = Quadra::where('disponivel', true)->with('empresa')->get();
         $horarios = Horario::where('disponivel', true)->get();
@@ -144,7 +144,7 @@ class ReservaController extends SuperAdminBaseController
             'status' => $request->status,
         ]);
 
-        return redirect()->route('super-admin.reservas.show', $reserva)
+        return redirect()->route('super-admin.reservas.index', $reserva)
             ->with('success', 'Reserva atualizada com sucesso!');
     }
 

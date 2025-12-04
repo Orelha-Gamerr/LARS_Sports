@@ -64,12 +64,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/relatorios', [SuperAdminDashboardController::class, 'relatorios'])->name('relatorios.index');
         Route::get('/relatorios/financeiro', [SuperAdminDashboardController::class, 'relatorioFinanceiro'])->name('relatorios.financeiro');
 
-        Route::post('/empresas/search', [EmpresaController::class, 'search'])->name('empresas.search');
+        Route::get('/empresas/search', [EmpresaController::class, 'search'])->name('empresas.search');        
+        Route::get('/clientes/search', [SuperAdminClienteController::class, 'search'])->name('clientes.search');
+        Route::get('/quadras/search', [SuperAdminQuadraController::class, 'search'])->name('quadras.search');
+        Route::get('/reservas/search', [SuperAdminReservaController::class, 'search'])->name('reservas.search');
         Route::resource('empresas', EmpresaController::class);
-        
-        Route::post('/clientes/search', [SuperAdminClienteController::class, 'search'])->name('clientes.search');
-        Route::post('/quadras/search', [SuperAdminQuadraController::class, 'search'])->name('quadras.search');
-        Route::post('/reservas/search', [SuperAdminReservaController::class, 'search'])->name('reservas.search');
         Route::resource('clientes', SuperAdminClienteController::class);
         Route::resource('quadras', SuperAdminQuadraController::class);
         Route::resource('reservas', SuperAdminReservaController::class);
