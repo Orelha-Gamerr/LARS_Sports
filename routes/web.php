@@ -97,6 +97,8 @@ Route::middleware(['auth'])->group(function () {
             
         });
 
+        Route::get('/quadras/pdf', [AdminQuadraController::class, 'generatePDF'])->name('quadras.pdf');
+
         Route::get('/quadras/search', [AdminQuadraController::class, 'search'])->name('quadras.search');
         Route::resource('quadras', AdminQuadraController::class);
 
