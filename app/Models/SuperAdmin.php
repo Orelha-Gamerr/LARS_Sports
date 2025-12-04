@@ -19,6 +19,11 @@ class SuperAdmin extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function empresas()
+    {
+        return $this->belongsToMany(Empresa::class);
+    }
+
     public function getNomeAttribute()
     {
         return $this->user->name;

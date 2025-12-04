@@ -30,6 +30,11 @@ class Empresa extends Model
         return $this->hasMany(Admin::class);
     }
 
+    public function superAdmins()
+    {
+        return $this->belongsToMany(SuperAdmin::class);
+    }
+
     public function reservas()
     {
         return $this->hasManyThrough(Reserva::class, Quadra::class);
