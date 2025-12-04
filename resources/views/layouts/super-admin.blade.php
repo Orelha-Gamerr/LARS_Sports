@@ -21,42 +21,49 @@
             @php
                 $currentRoute = request()->route()->getName();
             @endphp
-            
-            <a href="{{ route('super-admin.dashboard') }}" 
-               class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'super-admin.') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
+
+            <a href="{{ route('super-admin.dashboard') }}"
+            class="flex items-center py-3 px-6 transition-all duration-200 
+            {{ str_starts_with($currentRoute, 'super-admin.dashboard') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
                 <i class="fas fa-tachometer-alt w-6 text-center mr-3"></i>
                 <span>Dashboard</span>
             </a>
 
-            <a href="{{ route('super-admin.empresas.index') }}" 
-               class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'empresas.') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
+            <a href="{{ route('super-admin.empresas.index') }}"
+            class="flex items-center py-3 px-6 transition-all duration-200 
+            {{ str_starts_with($currentRoute, 'super-admin.empresas.') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
                 <i class="fas fa-building w-6 text-center mr-3"></i>
                 <span>Empresas</span>
             </a>
 
-            <a href="{{ route('super-admin.relatorios.index') }}" 
-               class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'super-admin.relatorios.index') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
+            <a href="{{ route('super-admin.relatorios.index') }}"
+            class="flex items-center py-3 px-6 transition-all duration-200 
+            {{ str_starts_with($currentRoute, 'super-admin.relatorios.') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
                 <i class="fas fa-chart-bar w-6 text-center mr-3"></i>
                 <span>Relatórios</span>
             </a>
-            
-            <a href="{{ route('super-admin.clientes.index') }}" 
-               class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'clientes.') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
+
+            <a href="{{ route('super-admin.clientes.index') }}"
+            class="flex items-center py-3 px-6 transition-all duration-200 
+            {{ str_starts_with($currentRoute, 'super-admin.clientes.') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
                 <i class="fas fa-users w-6 text-center mr-3"></i>
                 <span>Clientes</span>
             </a>
-            
-            <a href="{{ route('super-admin.quadras.index') }}" 
-               class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'quadras.') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
+
+            <a href="{{ route('super-admin.quadras.index') }}"
+            class="flex items-center py-3 px-6 transition-all duration-200 
+            {{ str_starts_with($currentRoute, 'super-admin.quadras.') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
                 <i class="fas fa-map-marker-alt w-6 text-center mr-3"></i>
                 <span>Quadras</span>
             </a>
-            
-            <a href="{{ route('super-admin.reservas.index') }}" 
-               class="flex items-center py-3 px-6 transition-all duration-200 {{ str_starts_with($currentRoute, 'reservas.') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
+
+            <a href="{{ route('super-admin.reservas.index') }}"
+            class="flex items-center py-3 px-6 transition-all duration-200 
+            {{ str_starts_with($currentRoute, 'super-admin.reservas.') ? 'bg-purple-700 border-r-4 border-purple-300' : 'hover:bg-purple-700' }}">
                 <i class="fas fa-calendar-alt w-6 text-center mr-3"></i>
                 <span>Reservas</span>
             </a>
+
         </nav>
         
         <div class="absolute bottom-0 w-64 p-4 border-t border-purple-700">

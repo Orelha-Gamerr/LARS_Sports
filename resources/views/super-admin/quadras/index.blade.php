@@ -44,8 +44,8 @@
                     <th class="px-4 py-3 font-medium text-gray-700">Nome</th>
                     <th class="px-4 py-3 font-medium text-gray-700">Tipo</th>
                     <th class="px-4 py-3 font-medium text-gray-700">Capacidade</th>
-                    <th class="px-4 py-3 font-medium text-gray-700">Disponibilidade</th>
                     <th class="px-4 py-3 font-medium text-gray-700">Imagem</th>
+                    <th class="px-4 py-3 font-medium text-gray-700">Disponibilidade</th>
                 </tr>
             </thead>
 
