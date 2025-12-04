@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminBaseController;
 use App\Models\Quadra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class QuadraController extends AdminBaseController
 {
@@ -128,9 +129,49 @@ class QuadraController extends AdminBaseController
                     ->orWhere('tipo', 'like', "%{$search}%");
             })
             ->paginate(10)
-            ->appends(['search' => $search]); // 🔥 Mantém a busca na paginação
+            ->appends(['search' => $search]);
 
         return view('admin.quadras.index', compact('quadras'));
     }
 
+    public function generatePDF(Request $request)
+    {
+        $user = auth()->user();
+        $empresa = $user->admin->empresa;
+        
+        // Usar a mesma lógica da busca
+        $query = Quadra::where('empresa_id', $empresa->id);
+        
+        // Aplicar filtro se existir na requisição
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->get('search');
+            $query->where(function($q) use ($search) {
+                $q->where('nome', 'like', "%{$search}%")
+                  ->orWhere('tipo', 'like', "%{$search}%");
+            });
+        }
+        
+        $quadras = $query->get();
+        
+        $data = [
+            'title' => 'Relatório de Quadras - ' . $empresa->nome . 
+                      ($request->has('search') ? ' (Filtrado)' : ''),
+            'date' => date('d/m/Y H:i:s'),
+            'quadras' => $quadras,
+            'empresa' => $empresa,
+            'totalQuadras' => $quadras->count(),
+            'disponiveis' => $quadras->where('disponivel', true)->count(),
+            'indisponiveis' => $quadras->where('disponivel', false)->count(),
+            'search' => $request->get('search', ''),
+        ];
+        
+        $pdf = Pdf::loadView('admin.quadras.pdf', $data);
+        
+        $filename = 'relatorio-quadras-' . date('Y-m-d');
+        if ($request->has('search')) {
+            $filename .= '-filtrado';
+        }
+        
+        return $pdf->download($filename . '.pdf');
+    }
 }
