@@ -124,7 +124,7 @@ class QuadraController extends SuperAdminBaseController
             'imagem' => $quadra->imagem,
         ]);
 
-        return redirect()->route('super-admin.quadras.show', $quadra)
+        return redirect()->route('super-admin.quadras.index', $quadra)
             ->with('success', 'Quadra atualizada com sucesso!');
     }
 

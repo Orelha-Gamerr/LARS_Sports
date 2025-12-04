@@ -145,7 +145,7 @@ class ClienteController extends SuperAdminBaseController
             'foto' => $cliente->foto,
         ]);
 
-        return redirect()->route('super-admin.clientes.show', $cliente)
+        return redirect()->route('super-admin.clientes.index', $cliente)
             ->with('success', 'Cliente atualizado com sucesso!');
     }
 
