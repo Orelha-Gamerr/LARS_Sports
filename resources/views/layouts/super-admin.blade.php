@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('title', 'Super Admin - ' . ($pageTitle ?? 'Reserve Quadras'))
 
@@ -103,7 +103,7 @@
                             </div>
                         </button>
                         
-                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-60 bg-white rounded-md shadow-lg py-1 z-50">
                             <div class="px-4 py-2 text-xs text-gray-500 border-b">
                                 Super Admin <strong>{{ auth()->user()->email }}</strong>
                             </div>

@@ -45,11 +45,15 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard()->logout(); 
+
+        $request->session()->flush(); 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+
+        return redirect()->route('login');
     }
+
 
     public function showRegistrationForm()
     {
